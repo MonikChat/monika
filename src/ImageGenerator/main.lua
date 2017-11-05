@@ -45,6 +45,8 @@ local backgrounds = {
 
 local padding = 10 -- px
 
+local wrapping = ("(%s)"):format(("[^\n]?"):rep(80))
+
 xavante.HTTP{
     server = {host = "localhost", port = 8080},
 
@@ -69,6 +71,8 @@ xavante.HTTP{
                         return res
                     end
 
+                    body.poem = body.poem:gsub(wrapping, "%1\n")
+
                     local background = backgrounds[body.font] or "poem.jpg"
                     local bkg = gd.createFromJpeg("backgrounds/"..background)
 
@@ -86,8 +90,6 @@ xavante.HTTP{
                     local img = gd.createTrueColor(width, height)
                     img:copyResampled(bkg, 0, 0, 0, 0, width, height, bkg:sizeXY())
                     local black = img:colorAllocate(0, 0, 0)
-                    local white = img:colorAllocate(255, 255, 255)
-                    img:fill(0, 0, white)
                     img:stringFTEx(black, fontFile,
                         fontSize, 0, padding, padding + (uly < 0 and -uly or 0),
                         body.poem, extra[body.font] or {})

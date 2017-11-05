@@ -1,0 +1,39 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26124.0
+MinimumVisualStudioVersion = 15.0.26124.0
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{FB006EFC-E930-47CA-AC32-CE223118C0FD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonikaBot", "src\MonikaBot\MonikaBot.csproj", "{4FB7CA88-E852-4659-9377-678D8E3FB6CF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4FB7CA88-E852-4659-9377-678D8E3FB6CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4FB7CA88-E852-4659-9377-678D8E3FB6CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4FB7CA88-E852-4659-9377-678D8E3FB6CF}.Debug|x64.ActiveCfg = Debug|x64
+		{4FB7CA88-E852-4659-9377-678D8E3FB6CF}.Debug|x64.Build.0 = Debug|x64
+		{4FB7CA88-E852-4659-9377-678D8E3FB6CF}.Debug|x86.ActiveCfg = Debug|x86
+		{4FB7CA88-E852-4659-9377-678D8E3FB6CF}.Debug|x86.Build.0 = Debug|x86
+		{4FB7CA88-E852-4659-9377-678D8E3FB6CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4FB7CA88-E852-4659-9377-678D8E3FB6CF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4FB7CA88-E852-4659-9377-678D8E3FB6CF}.Release|x64.ActiveCfg = Release|x64
+		{4FB7CA88-E852-4659-9377-678D8E3FB6CF}.Release|x64.Build.0 = Release|x64
+		{4FB7CA88-E852-4659-9377-678D8E3FB6CF}.Release|x86.ActiveCfg = Release|x86
+		{4FB7CA88-E852-4659-9377-678D8E3FB6CF}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{4FB7CA88-E852-4659-9377-678D8E3FB6CF} = {FB006EFC-E930-47CA-AC32-CE223118C0FD}
+	EndGlobalSection
+EndGlobal

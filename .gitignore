@@ -1,0 +1,10 @@
+# Build results
+bin
+obj
+
+# Copyrighted files
+*.ttf
+*.jpg
+
+# Configuration + tokens
+*.json

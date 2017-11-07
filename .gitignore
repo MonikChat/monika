@@ -7,4 +7,8 @@ obj
 *.jpg
 
 # Configuration + tokens
-*.json
+appsettings.json
+appsettings.*.json
+
+# Editor files
+.vscode

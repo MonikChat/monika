@@ -11,7 +11,12 @@ namespace Monika.Setup
         private IServiceProvider _services;
         private bool _running;
 
-        internal Application(Func<IServiceProvider, CancellationToken, Task> runMethod, IServiceProvider services)
+        public IServiceProvider Services => _services;
+        public bool Running => _running;
+
+        internal Application(
+            Func<IServiceProvider, CancellationToken, Task> runMethod,
+            IServiceProvider services)
         {
             _runMethod = runMethod;
             _services = services;
@@ -20,12 +25,14 @@ namespace Monika.Setup
         public async Task RunAsync()
         {
             if (_running)
-                throw new InvalidOperationException("The application is already running");
+                throw new InvalidOperationException(
+                    "The application is already running");
 
             _tokenSource = new CancellationTokenSource();
 
             InstallCtrlCHandler();
-            Console.WriteLine("Application started. Press Ctrl+C to cancel...");
+            Console.WriteLine(
+                "Application started. Press Ctrl+C to cancel...");
 
             var task = _runMethod(_services, _tokenSource.Token);
             _running = true;

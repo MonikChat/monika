@@ -23,6 +23,7 @@ namespace Monika.Services
         {
             _commands = new CommandService(options.Value);
             _commands.Log += LogWrapper.WrapLogger(logger);
+            _logger = logger;
             _scopeFactory = scopeFactory;
         }
 
@@ -44,6 +45,18 @@ namespace Monika.Services
                 if (userMessage.HasMentionPrefix(client.CurrentUser,
                     out int argPos))
                 {
+                    if (message.Channel is SocketGuildChannel guildChannel)
+                        _logger.LogTrace(
+                            "{User} in {Guild}/{Channel}: {Message}",
+                            message.Author.Username,
+                            guildChannel.Guild.Name, guildChannel.Name,
+                            message.Content);
+                    else
+                        _logger.LogTrace(
+                            "{User} in DMs: {Message}",
+                            message.Author.Username,
+                            message.Content);
+
                     var context = new SocketCommandContext(client,
                         userMessage);
                     using (var scope = _scopeFactory.CreateScope())

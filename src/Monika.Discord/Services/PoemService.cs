@@ -19,7 +19,8 @@ namespace Monika.Services
             _apiClient.BaseAddress = options.Value.BaseAddress;
         }
 
-        public async Task<Stream> GenerateImageAsync(string contents, string font)
+        public async Task<Stream> GenerateImageAsync(string contents,
+            string font)
         {
             var data = new PoemData
             {
@@ -32,8 +33,12 @@ namespace Monika.Services
 
             var response = await _apiClient.PostAsync("generate", content)
                 .ConfigureAwait(false);
-            return await response.Content.ReadAsStreamAsync()
-                .ConfigureAwait(false);
+
+            if (response.IsSuccessStatusCode)
+                return await response.Content.ReadAsStreamAsync()
+                    .ConfigureAwait(false);
+            else
+                throw new InvalidDataException("Could not generate a poem");
         }
 
         public void Dispose()

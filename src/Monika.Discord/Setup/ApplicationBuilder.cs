@@ -17,17 +17,24 @@ namespace Monika.Setup
         public ApplicationBuilder()
         { }
 
-        public ApplicationBuilder WithStartup<TStartup>() where TStartup : IStartup
+        public ApplicationBuilder WithStartup<TStartup>()
+            where TStartup : IStartup
         {
             var newStartupType = typeof(TStartup);
 
             var typeInfo = newStartupType.GetTypeInfo();
-            var constructors = typeInfo.DeclaredConstructors.Where(x => !x.IsStatic).ToArray();
+            var constructors = typeInfo.DeclaredConstructors
+                .Where(x => !x.IsStatic)
+                .ToArray();
 
             if (constructors.Length == 0)
-                throw new InvalidOperationException($"No constructor exists for '{newStartupType.FullName}'");
+                throw new InvalidOperationException(
+                    "No constructor exists " +
+                    $"for '{newStartupType.FullName}'");
             if (constructors.Length > 1)
-                throw new InvalidOperationException($"Multiple constructors exist for '{newStartupType.FullName}");
+                throw new InvalidOperationException(
+                    "Multiple constructors exist " +
+                    $"for '{newStartupType.FullName}");
 
             _startupConstructor = constructors[0];
             StartupType = newStartupType;
@@ -50,13 +57,17 @@ namespace Monika.Setup
 
             var services = new ServiceCollection();
 
-            services.TryAdd(ServiceDescriptor.Singleton<ILoggerFactory, LoggerFactory>((_) => loggerFactory));
-            services.TryAdd(ServiceDescriptor.Singleton(typeof(ILogger<>), typeof(Logger<>)));
+            services.TryAdd(ServiceDescriptor
+                .Singleton<ILoggerFactory, LoggerFactory>(
+                    (_) => loggerFactory));
+            services.TryAdd(ServiceDescriptor
+                .Singleton(typeof(ILogger<>), typeof(Logger<>)));
             services.TryAdd(ServiceDescriptor.Singleton(Environment));
 
             startup.ConfigureServices(services);
 
-            return new Application(startup.Run, services.BuildServiceProvider(true));
+            return new Application(startup.Run,
+                services.BuildServiceProvider(true));
         }
 
 
@@ -82,7 +93,8 @@ namespace Monika.Setup
                 }
             }
 
-            return _startupConstructor.Invoke(constructorArguments) as IStartup;
+            return _startupConstructor.Invoke(constructorArguments)
+                as IStartup;
         }
     }
 }

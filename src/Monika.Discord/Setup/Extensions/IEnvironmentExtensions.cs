@@ -7,7 +7,8 @@
             return env.IsEnvironment(Environment.Development);
         }
 
-        public static bool IsEnvironment(this IEnvironment env, string environmentString)
+        public static bool IsEnvironment(this IEnvironment env,
+            string environmentString)
         {
             foreach (var environment in environmentString.Split(','))
             {

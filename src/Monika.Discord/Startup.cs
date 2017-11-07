@@ -3,17 +3,19 @@ using System.Threading;
 using System.Threading.Tasks;
 using Discord.Commands;
 using Discord.WebSocket;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Monika.Models;
 using Monika.Options;
 using Monika.Services;
 using Monika.Setup;
 
 namespace Monika
 {
-    class Startup : IStartup
+    public class Startup : IStartup
     {
         private IConfigurationRoot Configuration { get; }
         private IEnvironment Environment { get; }
@@ -34,6 +36,11 @@ namespace Monika
         public void ConfigureServices(IServiceCollection services)
         {
             services
+                .AddDbContext<MonikaDbContext>(options =>
+                    options.UseSqlite(Configuration
+                        .GetConnectionString(Environment.EnvironmentName)));
+
+            services
                 .AddScoped<PoemService>()
                 .AddSingleton<CommandHandlingService>()
                 .AddSingleton<MonikaBot>();
@@ -42,10 +49,12 @@ namespace Monika
                 .AddOptions();
 
             services
-                .Configure<PoemServiceOptions>(Configuration.GetSection("Poems"))
-                .Configure<ChatOptions>(Configuration.GetSection("Chat"))
-                .Configure<CommandServiceConfig>(Configuration.GetSection("Commands"))
-                .Configure<DiscordSocketConfig>(Configuration.GetSection("Discord"))
+                .Configure<PoemServiceOptions>(
+                    Configuration.GetSection("Poems"))
+                .Configure<CommandServiceConfig>(
+                    Configuration.GetSection("Commands"))
+                .Configure<DiscordSocketConfig>(
+                    Configuration.GetSection("Discord"))
                 .Configure<MonikaOptions>(Configuration.GetSection("Monika"));
         }
 

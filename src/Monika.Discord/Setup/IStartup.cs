@@ -12,6 +12,7 @@ namespace Monika.Setup
     {
         void ConfigureServices(IServiceCollection builder);
         void ConfigureLogging(ILoggerFactory loggerFactory);
-        Task Run(IServiceProvider services, CancellationToken cancellationToken);
+        Task Run(IServiceProvider services,
+            CancellationToken cancellationToken);
     }
 }

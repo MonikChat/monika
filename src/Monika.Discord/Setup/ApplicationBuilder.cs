@@ -70,7 +70,6 @@ namespace Monika.Setup
                 services.BuildServiceProvider(true));
         }
 
-
         private IStartup CreateStartup()
         {
             var parameters = _startupConstructor.GetParameters();

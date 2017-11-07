@@ -41,7 +41,7 @@ namespace Monika.Setup
         {
             return EnvironmentName;
         }
-        #endregion
+#endregion
 
         public bool IsEnvironment(IEnvironment environment)
             => Equals(environment);

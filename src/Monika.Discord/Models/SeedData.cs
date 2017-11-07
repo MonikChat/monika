@@ -14,7 +14,7 @@ namespace Monika.Models
 
             if (dbContext.ChatLines.Any())
                 return;
-            
+
             var options = JsonConvert.DeserializeObject<IList<Option>>(
                 File.ReadAllText("seeddata.json"));
 

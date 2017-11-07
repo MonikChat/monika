@@ -5,7 +5,5 @@ namespace Monika.Utilities
 {
     public class DesignTimeMonikaDbContextFactory
         : DesignTimeDbContextFactory<MonikaDbContext>
-    {
-
-    }
+    { }
 }

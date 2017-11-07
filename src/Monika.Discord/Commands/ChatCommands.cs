@@ -26,7 +26,6 @@ namespace Monika.Commands
 
         [Command("chat")]
         [Alias("say", "c", "s")]
-        [Priority(-1)]
         public async Task ChatAsync([Remainder]string text)
         {
             ChatTypes flags = ChatTypes.All;

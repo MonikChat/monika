@@ -45,7 +45,7 @@ local backgrounds = {
 
 local padding = 100 -- px
 
-local wrapping = ("%S*%s?"):rep(16)
+local wrapping = ("(\n*)(%s)(\n*)"):format(("[^\n]?"):rep(80))
 
 xavante.HTTP{
     server = {host = "localhost", port = 8080},
@@ -72,21 +72,34 @@ xavante.HTTP{
                     end
 
                     body.poem = body.poem:gsub('\r', '')
+                    local rawPoem = body.poem
 
-                    local poem = {}
-                    for line, terminator in body.poem:gmatch("([^\n]*)(\n?)") do
-                        for wrap in line:gmatch(wrapping) do
-                            if #wrap > 0 then
-                                poem[#poem+1] = wrap
-                                    :gsub('&', '&amp;')
-                                    :gsub("^%s*(.-)%s*$", "%1")
+                    local poem = { }
+                    local start, finish, line = 1
+                    while not finish or finish < #rawPoem do
+                        start, finish, leadingNewlines, line, trailingNewlines = rawPoem:find(wrapping, finish)
+
+                        local lastSpace = line:find("%s%S*$")
+                        if lastSpace then
+                            local wordStart, wordFinish = rawPoem:find("%S+", start + lastSpace)
+                    
+                            if wordFinish > finish then
+                                finish = finish - (wordFinish - finish) + #leadingNewlines
+                                line = rawPoem:sub(start + #leadingNewlines, finish)
                             end
                         end
-                        if #line == 0 and #terminator == 1 then
-                            poem[#poem+1] = ''
+
+                        local trimmedLine = line
+                            :gsub("&", "&amp;")
+                            :gsub("^%s*(%S-)%s*$", "%1")
+
+                        poem[#poem+1] = trimmedLine
+                        for i = 1, #trailingNewlines-1 do
+                            poem[#poem+1] = ""
                         end
                     end
                     body.poem = table.concat(poem, '\n')
+                    print(body.poem)
 
                     local background = backgrounds[body.font] or "poem.jpg"
                     local bkg = gd.createFromJpeg("backgrounds/"..background)

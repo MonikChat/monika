@@ -15,33 +15,32 @@ namespace Monika.Commands
             _generator = generator;
         }
 
-        [Command("monika")]
+        [Command("monika", RunMode = RunMode.Async)]
         public Task GenerateMonikaPoem([Remainder] string text)
             => GeneratePoemAsync(text, "m1");
 
-        [Command("sayori")]
+        [Command("sayori", RunMode = RunMode.Async)]
         public Task GenerateSayoriPoem([Remainder] string text)
             => GeneratePoemAsync(text, "s1");
 
-        [Command("natsuki")]
+        [Command("natsuki", RunMode = RunMode.Async)]
         public Task GenerateNatsukiPoem([Remainder] string text)
             => GeneratePoemAsync(text, "n1");
 
-        [Command("yuri normal")]
+        [Command("yuri normal", RunMode = RunMode.Async)]
         public Task GenerateYuriNormalPoem([Remainder] string text)
             => GeneratePoemAsync(text, "y1");
 
-        [Command("yuri fast")]
+        [Command("yuri fast", RunMode = RunMode.Async)]
         public Task GenerateYuriFastPoem([Remainder] string text)
             => GeneratePoemAsync(text, "y2");
 
-        [Command("yuri obsessed")]
+        [Command("yuri obsessed", RunMode = RunMode.Async)]
         public Task GenerateYuriObsesseddPoem([Remainder] string text)
             => GeneratePoemAsync(text, "y3");
 
         private async Task GeneratePoemAsync(string text, string font)
         {
-            text = text.Replace("&", "&amp;");
             try
             {
                 var response = await _generator

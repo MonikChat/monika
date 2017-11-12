@@ -43,9 +43,9 @@ local backgrounds = {
     ["y3"] = "poem_y2.jpg"
 }
 
-local padding = 10 -- px
+local padding = 100 -- px
 
-local wrapping = ("(%s)"):format(("[^\n]?"):rep(80))
+local wrapping = ("%S*%s?"):rep(16)
 
 xavante.HTTP{
     server = {host = "localhost", port = 8080},
@@ -67,11 +67,26 @@ xavante.HTTP{
                         res.statusline = "HTTP/1.1 400 Bad Request"
                         res.headers["Content-Type"] = "application/json"
                         res.content = [[{"error": "missing body"}]]
-                        
+
                         return res
                     end
 
-                    body.poem = body.poem:gsub(wrapping, "%1\n")
+                    body.poem = body.poem:gsub('\r', '')
+
+                    local poem = {}
+                    for line, terminator in body.poem:gmatch("([^\n]*)(\n?)") do
+                        for wrap in line:gmatch(wrapping) do
+                            if #wrap > 0 then
+                                poem[#poem+1] = wrap
+                                    :gsub('&', '&amp;')
+                                    :gsub("^%s*(.-)%s*$", "%1")
+                            end
+                        end
+                        if #line == 0 and #terminator == 1 then
+                            poem[#poem+1] = ''
+                        end
+                    end
+                    body.poem = table.concat(poem, '\n')
 
                     local background = backgrounds[body.font] or "poem.jpg"
                     local bkg = gd.createFromJpeg("backgrounds/"..background)

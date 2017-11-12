@@ -41,21 +41,24 @@ namespace Monika.Commands
 
         private async Task GeneratePoemAsync(string text, string font)
         {
-            try
+            using (Context.Channel.EnterTypingState())
             {
-                var response = await _generator
-                    .GenerateImageAsync(text, font);
-                await Context.Channel.SendFileAsync(response, "poem.png",
-                    $"Hi {Context.User.Mention}! Here's your poem~");
-            }
-            catch (InvalidDataException)
-            {
-                await ReplyAsync(
-                    $"Sorry {Context.User.Mention}! Something went wrong " +
-                    "and I couldn't get that poem written for you!");
+                try
+                {
+                    var response = await _generator
+                        .GenerateImageAsync(text, font);
+                    await Context.Channel.SendFileAsync(response, "poem.png",
+                        $"Hi {Context.User.Mention}! Here's your poem~");
+                }
+                catch (InvalidDataException)
+                {
+                    await ReplyAsync(
+                        $"Sorry {Context.User.Mention}! Something went wrong " +
+                        "and I couldn't get that poem written for you!");
 
-                // re-throw the exception so that we can log it
-                throw;
+                    // re-throw the exception so that we can log it
+                    throw;
+                }
             }
         }
     }

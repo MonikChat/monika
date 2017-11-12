@@ -10,5 +10,8 @@ obj
 appsettings.json
 appsettings.*.json
 
+# Database files
+*.db
+
 # Editor files
 .vscode

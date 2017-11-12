@@ -82,7 +82,7 @@ xavante.HTTP{
                         local lastSpace = line:find("%s%S*$")
                         if lastSpace then
                             local wordStart, wordFinish = rawPoem:find("%S+", start + lastSpace)
-                    
+
                             if wordFinish > finish then
                                 finish = finish - (wordFinish - finish) + #leadingNewlines
                                 line = rawPoem:sub(start + #leadingNewlines, finish)

@@ -6,6 +6,7 @@ using Monika.Services;
 namespace Monika.Commands
 {
     [Group("poem")]
+    [Summary("Generates poems from specific authors")]
     public class PoemCommands : ModuleBase
     {
         private readonly PoemService _generator;
@@ -16,26 +17,32 @@ namespace Monika.Commands
         }
 
         [Command("monika", RunMode = RunMode.Async)]
+        [Summary("Generate a poem written by Monika")]
         public Task GenerateMonikaPoem([Remainder] string text)
             => GeneratePoemAsync(text, "m1");
 
         [Command("sayori", RunMode = RunMode.Async)]
+        [Summary("Generate a poem written by Sayori")]
         public Task GenerateSayoriPoem([Remainder] string text)
             => GeneratePoemAsync(text, "s1");
 
         [Command("natsuki", RunMode = RunMode.Async)]
+        [Summary("Generate a poem written by Natsuki")]
         public Task GenerateNatsukiPoem([Remainder] string text)
             => GeneratePoemAsync(text, "n1");
 
         [Command("yuri normal", RunMode = RunMode.Async)]
+        [Summary("Generate a poem written by Yuri normally")]
         public Task GenerateYuriNormalPoem([Remainder] string text)
             => GeneratePoemAsync(text, "y1");
 
         [Command("yuri fast", RunMode = RunMode.Async)]
+        [Summary("Generate a poem written by Yuri when she starts becomming obsessed")]
         public Task GenerateYuriFastPoem([Remainder] string text)
             => GeneratePoemAsync(text, "y2");
 
         [Command("yuri obsessed", RunMode = RunMode.Async)]
+        [Summary("Generate a poem written by Yuri in her obsessed state")]
         public Task GenerateYuriObsesseddPoem([Remainder] string text)
             => GeneratePoemAsync(text, "y3");
 

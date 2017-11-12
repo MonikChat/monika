@@ -38,7 +38,12 @@ namespace Monika.Services
                 return await response.Content.ReadAsStreamAsync()
                     .ConfigureAwait(false);
             else
-                throw new InvalidDataException("Could not generate a poem");
+            {
+                var error = await response.Content.ReadAsStringAsync()
+                    .ConfigureAwait(false);
+                throw new InvalidDataException(
+                    $"Could not generate a poem: {error}");
+            }
         }
 
         public void Dispose()

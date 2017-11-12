@@ -5,11 +5,9 @@ local json = require("cjson")
 
 local WIDTH = 720
 local HEIGHT = 500
+local PADDING = 100 -- px
 
-local dummy = gd.createTrueColor(WIDTH, HEIGHT)
-local dummyColor = dummy:colorAllocate(255, 255, 255)
-
-local extra = {
+local FREETYPE_CFG = {
     ["m1"] = { -- monika
         fontsize = 34
     },
@@ -34,7 +32,7 @@ local extra = {
     }
 }
 
-local backgrounds = {
+local BACKGROUNDS = {
     ["m1"] = nil,
     ["n1"] = nil,
     ["s1"] = nil,
@@ -43,9 +41,27 @@ local backgrounds = {
     ["y3"] = "poem_y2.jpg"
 }
 
-local padding = 100 -- px
+local dummy = gd.createTrueColor(WIDTH, HEIGHT)
+local dummyColor = dummy:colorAllocate(255, 255, 255)
 
-local wrapping = ("(\n*)(%s)(\n*)"):format(("[^\n]?"):rep(80))
+-- Word wrapping from http://lua-users.org/wiki/TextProcessing
+-- Slightly modified to remove unnecessary parameters in this context
+local strrep, strsub = string.rep, string.sub
+function wrap(s, w)
+    w = w or 78
+    local lstart, len = 1, #s
+    while len - lstart > w do
+        local i = lstart + w
+        while i > lstart and strsub(s, i, i) ~= " " do i = i - 1 end
+        local j = i
+        while j > lstart and strsub(s, j, j) == " " do j = j - 1 end
+        s = strsub(s, 1, j) .. "\n" .. strsub(s, i + 1, -1)
+        local change = 1 - (i - j)
+        lstart = j + change
+        len = len + change
+    end
+    return s
+end
 
 xavante.HTTP{
     server = {host = "localhost", port = 8080},
@@ -59,7 +75,8 @@ xavante.HTTP{
                         return httpd.err_405(req, res)
                     end
 
-                    local body = req.socket:receive(req.headers["content-length"])
+                    local body = req.socket:receive(
+                        req.headers["content-length"])
 
                     body = body and json.decode(body)
 
@@ -71,61 +88,46 @@ xavante.HTTP{
                         return res
                     end
 
-                    body.poem = body.poem:gsub('\r', '')
-                    local rawPoem = body.poem
-
-                    local poem = { }
-                    local start, finish, line = 1
-                    while not finish or finish < #rawPoem do
-                        start, finish, leadingNewlines, line, trailingNewlines = rawPoem:find(wrapping, finish)
-
-                        local lastSpace = line:find("%s%S*$")
-                        if lastSpace then
-                            local wordStart, wordFinish = rawPoem:find("%S+", start + lastSpace)
-
-                            if wordFinish > finish then
-                                finish = finish - (wordFinish - finish) + #leadingNewlines
-                                line = rawPoem:sub(start + #leadingNewlines, finish)
-                            end
-                        end
-
-                        local trimmedLine = line
-                            :gsub("&", "&amp;")
-                            :gsub("^%s*(%S-)%s*$", "%1")
-
-                        poem[#poem+1] = trimmedLine
-                        for i = 1, #trailingNewlines-1 do
+                    local rawPoem = body.poem:gsub("\r","")
+                    local poem = {}
+                    for line, terminator in rawPoem:gmatch("([^\n]*)(\n?)") do
+                        if #line > 0 then
+                            poem[#poem+1] = wrap(line, 75)
+                        elseif #terminator > 0 then
                             poem[#poem+1] = ""
                         end
                     end
-                    body.poem = table.concat(poem, '\n')
+                    body.poem = table.concat(poem, "\n")
 
-                    local background = backgrounds[body.font] or "poem.jpg"
+                    local background = BACKGROUNDS[body.font] or "poem.jpg"
                     local bkg = gd.createFromJpeg("backgrounds/"..background)
 
                     local fontFile = "./fonts/" .. body.font .. ".ttf"
-                    local fontSize = extra[body.font] and extra[body.font].fontsize or 14
+                    local fontSize = FREETYPE_CFG[body.font] and
+                        FREETYPE_CFG[body.font].fontsize or 14
 
                     local llx, lly, lrx, lry, urx, ury, ulx, uly, font =
                         dummy:stringFTEx(dummyColor, fontFile,
                         fontSize, 0, 0, 0,
-                        body.poem, extra[body.font] or {})
+                        body.poem, FREETYPE_CFG[body.font] or {})
 
-                    local width = math.max(150, math.abs(urx - ulx)) + 2 * padding
-                    local height = math.max(150, math.abs(lly - uly)) + 2 * padding
+                    local width = math.max(150, math.abs(urx - ulx))
+                        + 2 * PADDING
+                    local height = math.max(150, math.abs(lly - uly))
+                        + 2 * PADDING
 
                     local img = gd.createTrueColor(width, height)
-                    img:copyResampled(bkg, 0, 0, 0, 0, width, height, bkg:sizeXY())
+                    img:copyResampled(bkg, 0, 0, 0, 0, width, height,
+                        bkg:sizeXY())
                     local black = img:colorAllocate(0, 0, 0)
                     img:stringFTEx(black, fontFile,
-                        fontSize, 0, padding, padding + (uly < 0 and -uly or 0),
-                        body.poem, extra[body.font] or {})
+                        fontSize, 0, PADDING,
+                        PADDING + (uly < 0 and -uly or 0),
+                        body.poem, FREETYPE_CFG[body.font] or {})
 
                     res.statusline = "HTTP/1.1 200 OK"
                     res.headers["Content-Type"] = "image/png"
                     res.content = img:pngStr()
-
-                    --img:png("tmp.png")
 
                     return res
                 end

@@ -99,7 +99,6 @@ xavante.HTTP{
                         end
                     end
                     body.poem = table.concat(poem, '\n')
-                    print(body.poem)
 
                     local background = backgrounds[body.font] or "poem.jpg"
                     local bkg = gd.createFromJpeg("backgrounds/"..background)

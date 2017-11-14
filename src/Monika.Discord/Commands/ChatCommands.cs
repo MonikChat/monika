@@ -16,12 +16,10 @@ namespace Monika.Commands
     public class ChatCommands : ModuleBase
     {
         private readonly MonikaDbContext _dbContext;
-        private readonly Random _random;
 
         public ChatCommands(MonikaDbContext dbContext)
         {
             _dbContext = dbContext;
-            _random = new Random();
         }
 
         [Command("chat")]
@@ -38,19 +36,21 @@ namespace Monika.Commands
             // Convert to lowercase because it's easier to match against
             text = text.ToLower();
 
-            var validResponses = _dbContext.ChatTriggers
-                .Include(x => x.ChatLine)
-                .ThenInclude(x => x.Responses)
+            var responseId = _dbContext.ChatTriggers
+                .AsNoTracking()
                 .Where(x => text.Contains(x.Text))
                 .SelectMany(x => x.ChatLine.Responses)
                 .Where(x => (x.SupportedChatTypes & flags) == flags)
-                .ToArray();
+                .OrderBy(x => MonikaDbContext.Random())
+                .Select(x => x.Id)
+                .FirstOrDefault();
 
-            if (validResponses.Length > 0)
+            var response = _dbContext.ChatResponses
+                .AsNoTracking()
+                .FirstOrDefault(x => x.Id == responseId);
+
+            if (response != null)
             {
-                var response = validResponses[
-                    _random.Next(validResponses.Length)];
-
                 var responseText = response.Text
                     .NamedFormat(new Dictionary<string, string>
                 {

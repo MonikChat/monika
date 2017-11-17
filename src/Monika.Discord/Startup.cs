@@ -8,7 +8,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Monika.Models;
 using Monika.Options;
 using Monika.Services;
 using Monika.Setup;
@@ -36,12 +35,8 @@ namespace Monika
         public void ConfigureServices(IServiceCollection services)
         {
             services
-                .AddDbContext<MonikaDbContext>(options =>
-                    options.UseSqlite(Configuration
-                        .GetConnectionString(Environment.EnvironmentName)));
-
-            services
                 .AddScoped<PoemService>()
+                .AddScoped<ChatService>()
                 .AddSingleton<CommandHandlingService>()
                 .AddSingleton<MonikaBot>();
 
@@ -51,6 +46,8 @@ namespace Monika
             services
                 .Configure<PoemServiceOptions>(
                     Configuration.GetSection("Poems"))
+                .Configure<ChatServiceOptions>(
+                    Configuration.GetSection("Chat"))
                 .Configure<CommandServiceConfig>(
                     Configuration.GetSection("Commands"))
                 .Configure<DiscordSocketConfig>(

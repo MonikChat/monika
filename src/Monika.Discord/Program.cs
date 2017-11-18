@@ -1,4 +1,4 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Monika.Setup;
@@ -22,7 +22,11 @@ namespace Monika
 
         public static Application BuildApplication(string[] args)
             => new ApplicationBuilder()
+#if !DEBUG
+                .WithEnvironment(Environment.Production)
+#else
                 .WithEnvironment(Environment.Development)
+#endif
                 .WithStartup<Startup>()
                 .Build();
     }

@@ -41,6 +41,7 @@ namespace Monika
                 .AddSingleton<MonikaBot>();
 
             services
+                .AddMemoryCache()
                 .AddOptions();
 
             services

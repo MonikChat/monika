@@ -4,19 +4,23 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using Discord;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Options;
 using Monika.Options;
 using Newtonsoft.Json;
 
 namespace Monika.Services
 {
-    public class ChatService
+    public class ChatService : IDisposable
     {
         private readonly HttpClient _apiClient;
+        private readonly IMemoryCache _sessionCache;
 
         private readonly string _projectId;
 
-        public ChatService(IOptions<ChatServiceOptions> options)
+        public ChatService(
+            IOptions<ChatServiceOptions> options,
+            IMemoryCache sessionCache)
         {
             _apiClient = new HttpClient();
             _apiClient.BaseAddress =
@@ -24,12 +28,31 @@ namespace Monika.Services
             _apiClient.DefaultRequestHeaders.Authorization =
                 new AuthenticationHeaderValue("Bearer", options.Value.ApiKey);
 
+            _sessionCache = sessionCache;
+
             _projectId = options.Value.ProjectId;
+        }
+
+        public void Dispose()
+        {
+            _apiClient.Dispose();
+            _sessionCache.Dispose();
+        }
+
+        public void EraseSession(IUser user)
+        {
+            _sessionCache.Remove(user.Id);
         }
 
         public async Task<string> GetResponseForUserAsync(IUser user,
             string message, string language = "en")
         {
+            Guid session = _sessionCache.GetOrCreate(user.Id, entry =>
+            {
+                entry.SetSlidingExpiration(TimeSpan.FromMinutes(10));
+                return Guid.NewGuid();
+            });
+
             var payload = new
             {
                 queryInput = new
@@ -46,7 +69,7 @@ namespace Monika.Services
             var content = new StringContent(body, Encoding.UTF8,
                 "application/json");
             var response = await _apiClient.PostAsync(
-                $"projects/{_projectId}/agent/sessions/{user.Id}:detectIntent",
+                $"projects/{_projectId}/agent/sessions/{session}:detectIntent",
                 content)
                 .ConfigureAwait(false);
 

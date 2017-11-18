@@ -34,9 +34,15 @@ namespace Monika.Commands
         {
             try
             {
+                // Ignore the text param as it contains unresolved text. We do
+                // manual resolving here.
+                var content = Context.Message.Resolve(
+                    userHandling: TagHandling.FullName)
+                    .Substring("@Monika#7184 c ".Length);
+
                 await ReplyAsync(
                     await _chatApi.GetResponseForUserAsync(
-                        Context.User, text));
+                        Context.User, content));
             }
             catch (Exception e)
             {

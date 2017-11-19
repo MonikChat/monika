@@ -44,8 +44,10 @@ namespace Monika.Commands
                     channelHandling: TagHandling.FullNameNoPrefix,
                     roleHandling: TagHandling.FullNameNoPrefix,
                     everyoneHandling: TagHandling.FullNameNoPrefix,
-                    emojiHandling: TagHandling.FullNameNoPrefix)
-                    .Substring("Monika#7184 c ".Length);
+                    emojiHandling: TagHandling.FullNameNoPrefix);
+
+                content = content.Substring(
+                    content.IndexOf(' ', content.IndexOf(' ') + 1) + 1);
 
                 content = _discriminatorPattern.Replace(content, "");
 

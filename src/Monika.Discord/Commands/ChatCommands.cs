@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Discord;
 using Discord.Commands;
@@ -16,6 +17,8 @@ namespace Monika.Commands
 {
     public class ChatCommands : ModuleBase
     {
+        private readonly Regex _discriminatorPattern = new Regex(@"#[0-9]{4}",
+            RegexOptions.Compiled | RegexOptions.CultureInvariant);
         private readonly ChatService _chatApi;
         private readonly ILogger _logger;
 
@@ -37,8 +40,14 @@ namespace Monika.Commands
                 // Ignore the text param as it contains unresolved text. We do
                 // manual resolving here.
                 var content = Context.Message.Resolve(
-                    userHandling: TagHandling.FullName)
-                    .Substring("@Monika#7184 c ".Length);
+                    userHandling: TagHandling.FullNameNoPrefix,
+                    channelHandling: TagHandling.FullNameNoPrefix,
+                    roleHandling: TagHandling.FullNameNoPrefix,
+                    everyoneHandling: TagHandling.FullNameNoPrefix,
+                    emojiHandling: TagHandling.FullNameNoPrefix)
+                    .Substring("Monika#7184 c ".Length);
+
+                content = _discriminatorPattern.Replace(content, "");
 
                 await ReplyAsync(
                     await _chatApi.GetResponseForUserAsync(

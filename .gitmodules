@@ -1,0 +1,4 @@
+[submodule "thirdparty/dialogflow-dotnet-client"]
+	path = thirdparty/dialogflow-dotnet-client
+	url = https://github.com/dialogflow/dialogflow-dotnet-client.git
+	branch = dev

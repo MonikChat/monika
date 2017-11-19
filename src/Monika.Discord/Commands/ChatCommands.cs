@@ -18,7 +18,6 @@ namespace Monika.Commands
     {
         private readonly ChatService _chatApi;
         private readonly ILogger _logger;
-        private readonly Optional<string> Username;
 
         public ChatCommands(
             ChatService chatApi,

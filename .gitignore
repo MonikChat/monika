@@ -15,3 +15,5 @@ appsettings.*.json
 
 # Editor files
 .vscode
+.vs/Monika/v15
+

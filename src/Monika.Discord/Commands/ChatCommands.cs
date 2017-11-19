@@ -18,6 +18,7 @@ namespace Monika.Commands
     {
         private readonly ChatService _chatApi;
         private readonly ILogger _logger;
+        private readonly Optional<string> Username;
 
         public ChatCommands(
             ChatService chatApi,
@@ -38,7 +39,7 @@ namespace Monika.Commands
                 // manual resolving here.
                 var content = Context.Message.Resolve(
                     userHandling: TagHandling.FullName)
-                    .Substring("@Monika#7184 c ".Length);
+                    .Substring($"<@{DiscordSocketClient.CurrentUser.Id}> c ".Length);
 
                 await ReplyAsync(
                     await _chatApi.GetResponseForUserAsync(

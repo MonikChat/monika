@@ -39,7 +39,7 @@ namespace Monika.Commands
                 // manual resolving here.
                 var content = Context.Message.Resolve(
                     userHandling: TagHandling.FullName)
-                    .Substring($"<@{DiscordSocketClient.CurrentUser.Id}> c ".Length);
+                    .Substring($"<@{Context.Client.CurrentUser.Id}> c ".Length);
 
                 await ReplyAsync(
                     await _chatApi.GetResponseForUserAsync(

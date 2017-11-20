@@ -6,7 +6,7 @@ using System;
 using Squirrel;
 namespace Monika.Updater
 {
-    public class Updater 
+    public class UpdateService 
     {
         public static void Main() 
         {

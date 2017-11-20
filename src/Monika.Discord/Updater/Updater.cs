@@ -8,7 +8,7 @@ using Squirrel.Windows;
 
 namespace Monika.Updater
 {
-    public class Program 
+    public class UpdateService 
     {
         public static void Main () 
         {

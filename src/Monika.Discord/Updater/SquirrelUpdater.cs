@@ -1,11 +1,14 @@
-// A Hello World! program in C#.
+//Fucking Monikammmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
+// mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
+// this on MIT btw uwu
+
 using System;
 using Squirrel;
 namespace Monika.Updater
 {
-    class Hello 
+    public class Updater 
     {
-        static void Main() 
+        public static void Main() 
         {
             // variables for Nuget paths
             // Unix users: please make a symbolic link to /usr/bin for this to work.

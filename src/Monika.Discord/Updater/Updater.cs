@@ -17,7 +17,7 @@ namespace Monika.Updater
             var platform = os.Platform;
             switch(platform)
             {
-                #region Windows Cases
+                #region Windows Updater case
                 case PlatformID.Win32NT:
                 case PlatformID.Win32S:
                 case PlatformID.Win32Windows:

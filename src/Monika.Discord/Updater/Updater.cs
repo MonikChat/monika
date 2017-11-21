@@ -1,4 +1,4 @@
-//Fucking Monikammmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
+// Fucking Monikammmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
 // mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
 // this on MIT btw uwu
 
@@ -6,7 +6,7 @@ using System;
 using System.Net.Http;
 using Squirrel.Windows;
 
-namespace Monika.Updater
+namespace Monika.Discord.Updater
 {
     public class UpdateService 
     {

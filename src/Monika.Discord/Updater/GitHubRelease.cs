@@ -4,7 +4,7 @@
 
 using Newtonsoft.Json;
 
-namespace Monika.Discord.Updater
+namespace Monika.Updater
 {
     public class GitHubRelease
     {

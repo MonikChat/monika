@@ -11,6 +11,7 @@ using Microsoft.Extensions.Options;
 using Monika.Options;
 using Monika.Services;
 using Monika.Setup;
+using Monika.Updater;
 
 namespace Monika
 {

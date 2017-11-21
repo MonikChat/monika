@@ -6,7 +6,7 @@ using System;
 using System.Net.Http;
 using Squirrel.Windows;
 
-namespace Monika.Discord.Updater
+namespace Monika.Updater
 {
     public class UpdateService 
     {

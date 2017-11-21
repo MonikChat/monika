@@ -4,13 +4,19 @@
 
 using System;
 using System.Net.Http;
+using Newtonsoft.Json;
 using Squirrel.Windows;
 
 namespace Monika.Updater
 {
     public class UpdateService 
     {
-        public static void Main () 
+        public static void CheckUpdates ()
+        {
+            var req = new HttpClient();
+            Console.WriteLine("Checking for new version...");
+        }
+        public static void Update () 
         {
             // check for Operating system first
             var os = Environment.OSVersion;

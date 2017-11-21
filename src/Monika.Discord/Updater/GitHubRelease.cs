@@ -12,7 +12,7 @@ namespace Monika.Updater
         public string Id;
 
         [JsonProperty(@"tag_name")]
-        public string TagName => $"{Name}";
+        public string TagName;
 
         [JsonProperty(@"prerealease")]
         public bool PreRelease;

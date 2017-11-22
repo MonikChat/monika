@@ -45,6 +45,12 @@ namespace Monika.Services
                 if (userMessage.HasMentionPrefix(client.CurrentUser,
                     out int argPos))
                 {
+#if DEVEL
+                    var appInfo = await client.GetApplicationInfoAsync();
+                    if (message.Author.Id != appInfo.Owner.Id)
+                        return;
+#endif
+
                     if (message.Channel is SocketGuildChannel guildChannel)
                         _logger.LogTrace(
                             "{User} in {Guild}/{Channel}: {Message}",

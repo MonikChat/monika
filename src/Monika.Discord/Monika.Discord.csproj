@@ -3,6 +3,9 @@
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp2.0</TargetFramework>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(DEVEL)' == 'true' ">
+    <DefineConstants>$(DefineConstants);DEVEL</DefineConstants>
+  </PropertyGroup>
   <ItemGroup>
     <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.0" />
   </ItemGroup>
@@ -19,5 +22,8 @@
     <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="2.0.0" />
     <PackageReference Include="Microsoft.Extensions.Options" Version="2.0.0" />
     <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="2.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="../../thirdparty/dialogflow-dotnet-client/ApiAiSDK.NETCore/ApiAiSDK.NETCore.csproj" />
   </ItemGroup>
 </Project>

@@ -1,0 +1,21 @@
+[Service]
+
+# what binaries to exec. absolute paths only
+# default /usr/bin/dotnet Monika.Discord.dll
+
+ExecStart=/usr/bin/dotnet Monika.Discord.dll
+
+# Working directory for the service. This is 
+# where would the service would cwd in.
+# default /home/user/Monika.Discord
+
+WorkingDirectory=/home/user/Monika.Discord
+
+# What to exec when errored out
+# default sleep 3000
+
+ExecStop= sleep 3000
+
+[Install]
+
+WantedBy=multi-user.target

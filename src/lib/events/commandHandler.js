@@ -81,7 +81,7 @@ module.exports = bot => {
                     description: `An error occurred while trying to execute command \`${cmd}\``,
                     color: 0xF44336,
                     timestamp: new Date(),
-                    footer: {text: `Clara Version ${version}`},
+                    footer: {text: `Monika Version ${version}`},
                     fields: [
                         {
                             name: '\u200b',
@@ -108,7 +108,7 @@ module.exports = bot => {
                     description: `An error occurred while trying to execute command \`${cmd}\``,
                     color: 0xF44336,
                     timestamp: new Date(),
-                    footer: {text: `Clara Version ${version}`},
+                    footer: {text: `Monika Version ${version}`},
                     fields: [
                         {
                             name: '\u200b',

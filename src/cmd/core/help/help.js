@@ -79,5 +79,5 @@ function embedTemplate(bot) {
     this.fields = [
         {name: '\u200b', inline: true}
     ];
-    this.footer = {text: 'Powered by Clara'};
+    this.footer = {text: 'Just Monika~@'};
 }

@@ -7,8 +7,8 @@
     "info-shards": "Fragmentos activos",
     "info-mem": "Uso de memoria",
     "info-version": "Versión",
-    "info-footer": "{{name}} está construido por Clara. Haz clic en \"Código fuente\" para revisar el repositorio!",
+    "info-footer": "{{name}} está construido por Monika. Haz clic en \"Código fuente\" para revisar el repositorio!",
     "info-source": "Código fuente",
-    "info-supportServer": "Servidor de Soporte Clara",
+    "info-supportServer": "Servidor de Soporte Monika",
     "info-NodeVersion": "Version de Node.js"
 }

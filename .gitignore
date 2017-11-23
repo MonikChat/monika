@@ -16,4 +16,12 @@ appsettings.*.json
 # Editor files
 .vscode
 .vs/Monika/v15
+.che
+
+#node.js cache
+
+node_modules
+
+# we don't want to accidentally commit this
+config.json
 

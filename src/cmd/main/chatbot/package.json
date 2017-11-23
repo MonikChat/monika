@@ -1,0 +1,6 @@
+{
+  "main": "chatbot.js",
+  "dependencies": {
+    "burlyy": "github:Ovyerus/burly"
+  }
+}

@@ -1,15 +1,15 @@
 [Service]
 
 # what binaries to exec. absolute paths only
-# default /usr/bin/dotnet Monika.Discord.dll
+# default /usr/bin/nodejs ./src/bot --harmony
 
-ExecStart=/usr/bin/dotnet Monika.Discord.dll
+ExecStart=/usr/bin/nodejs ./src/bot --harmony
 
 # Working directory for the service. This is 
 # where would the service would cwd in.
-# default /home/user/Monika.Discord
+# default /home/user/monika
 
-WorkingDirectory=/home/user/Monika.Discord
+WorkingDirectory=/home/user/monika
 
 # What to exec when errored out
 # default sleep 3000

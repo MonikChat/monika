@@ -2,6 +2,7 @@
   * @file the main file the makes everything work
   * @author Capuccino
   * @author Ovyerus
+  * @author FiniteReality
   * @copyright Copyright (c) 2017 Capuccino, Ovyerus and the repository contributors.
   * @license MIT
   */

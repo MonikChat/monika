@@ -4,16 +4,15 @@
     "promiseWarnings": false,
     "ibKey": "",
     "mainPrefix": "?",
-    "osuApiKey": "",
-    "sauceKey" : "",
     "gameName" : "",
     "gameURL" :"",
     "ownerID": "",
     "maxShards": 1,
     "ytSearchKey": "",
     "twitchKey": "",
+    "dialogFlowSessionID": "",
+    "dialogFlowProjectID": "",
     "nasaKey": "",
-    "redisUrl": "redis://127.0.0.1/0",
     "discordBotsPWKey": "",
     "discordBotsOrgKey": ""
 }

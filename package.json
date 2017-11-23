@@ -1,0 +1,32 @@
+{
+    "name": "monika",
+    "version": "1.0.0-javascript1",
+    "description": "The only discord bot you need",
+    "main": "./src/bot.js",
+    "scripts": {
+        "start": "node ./src/bot.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/sr229/monika.git"
+    },
+    "keywords": [
+        "discord",
+        "bot"
+    ],
+    "author": [ "sr229", "FiniteReality"],
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/sr229/monika/issues"
+    },
+    "homepage": "https://github.com/sr229/monika",
+    "dependencies": {
+        "bluebird": "^3.5.1",
+        "eris": "abalabahaha/eris",
+        "got": "^8.0.0"
+    },
+    "devDependencies": {
+        "eslint": "^4.10.0",
+        "eslint-config-defaults": "^9.0.0"
+    }
+}

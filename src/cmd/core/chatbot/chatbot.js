@@ -34,7 +34,7 @@ exports.chat = {
             }).catch(reject);
         }
     }
-}
+};
 
 
 /**

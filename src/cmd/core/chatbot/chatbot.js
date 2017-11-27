@@ -19,19 +19,13 @@ exports.init = () => {
 exports.chat = {
     desc: 'Chat to Monika',
     usage: '<message>',
-    main(bot, ctx) {
+    async main(bot, ctx) {
         if (!ctx.suffix) {
-         await client.detectIntent(__createResponseObject('hey', 'en'))
-            .then(res => {
-                const result = res[0].queryResult;
-                await ctx.createMessage(result.queryText);
-            }).catch(reject);
+            let result = await client.detectIntent(__createResponseObject('hey', 'en'));
+            await ctx.createMessage(result[0].queryResult.queryText);
         } else {
-            await client.detectIntent(__createResponseObject(ctx.cleanSuffix, 'en'))
-            .then(res => {
-                const result = res[0].queryResult;
-                await ctx.createMessage(result.queryText);
-            }).catch(reject);
+            let result = await client.detectIntent(__createResponseObject(ctx.createMessage, 'en'));
+            await ctx.createMessage(result[0].queryResult.queryText);
         }
     }
 };
@@ -43,7 +37,7 @@ exports.chat = {
  * @param {String} lang the language the response is. Defaults to en
  * @internal
  */
-function __createResponseObject(res, lang) {
+function __createResponseObject(res, lang='en') {
     return {
         session: spPath,
         queryInput: {

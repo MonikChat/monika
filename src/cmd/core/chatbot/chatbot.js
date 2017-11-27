@@ -41,6 +41,7 @@ exports.chat = {
  * creates a Response object for Dialogflow
  * @param {String} res the response to send
  * @param {String} lang the language the response is. Defaults to en
+ * @internal
  */
 function __createResponseObject(res, lang) {
     return {
@@ -49,5 +50,5 @@ function __createResponseObject(res, lang) {
             text: res,
             languageCode: lang || 'en'
         },
-    }
-};
+    };
+}

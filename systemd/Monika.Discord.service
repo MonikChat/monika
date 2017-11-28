@@ -1,9 +1,9 @@
 [Service]
 
 # what binaries to exec. absolute paths only
-# default /usr/bin/nodejs ./src/bot --harmony
+# default /usr/bin/pm2 start src/monika.config.js
 
-ExecStart=/usr/bin/nodejs ./src/bot --harmony
+ExecStart=/usr/bin/pm2 start src/monika.config.js
 
 # Working directory for the service. This is 
 # where would the service would cwd in.

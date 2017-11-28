@@ -6,7 +6,7 @@ this is the MaaS concept bot, at the moment, it's all barebones but we have at l
 
 You will need Node 8.10.0 and above with pm2 installed globally.
 
-Then copy `config.json.example` to `Clara` as `config.json`.
+Then copy `config.json.example` to `Clara` as `config.json` and provide necessary credentials listed there.
 
 You have two ways to run the bot and the services:
 - **PM2**

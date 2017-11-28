@@ -12,7 +12,7 @@ exports.commands = ['chat'];
 
 exports.init = () => {
     client = new dialogflow.SessionsClient();
-    spPath = client.sessionPath(config.dialogFlowSessionID, dialogFlowProjectID);
+    spPath = client.sessionPath(config.dialogFlowSessionID, config.dialogFlowProjectID);
 };
 
 
@@ -32,10 +32,12 @@ exports.chat = {
 
 
 /**
- * creates a Response object for Dialogflow
- * @param {String} res the response to send
- * @param {String} lang the language the response is. Defaults to en
+ * Creates a response object for Dialogflow.
+ * 
+ * @param {String} res Response to send
+ * @param {String} [lang='em'] Language the response is in. Defaults to en
  * @internal
+ * @returns {Object} .
  */
 function __createResponseObject(res, lang='en') {
     return {
@@ -43,6 +45,6 @@ function __createResponseObject(res, lang='en') {
         queryInput: {
             text: res,
             languageCode: lang || 'en'
-        },
+        }
     };
 }

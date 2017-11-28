@@ -1,6 +1,6 @@
 # ImageGenerator #
 
-A small utility tool to generate images for Monika
+A small utility tool to generate images for Monika.
 
 ## Setup ##
 

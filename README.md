@@ -1,6 +1,6 @@
 # Monika: Your Literature Club Friend #
 
-Hi, monika here! Don't worry that there's not much here, hehe~
+Hi, Monika here! Don't worry that there's not much here, hehe~
 
 ## LICENSE ##
 

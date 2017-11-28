@@ -24,6 +24,7 @@ exports.poem = {
         } else if (!ctx.args[2]) {
             await ctx.createMessage('Give me a poem to write with.');
         } else {
+            //TODO: CC @ovyerus for the Python Image generator RPC
             return new Error('Not implemented yet.');
         }
     }

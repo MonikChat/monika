@@ -21,6 +21,6 @@ You have two ways to run the bot and the services:
 
 ## Roadmap
 
-- [] Clara Discord Gateway
-- [] Rebecca Dialogflow/Tensorflow AI
-- [] Poem Generator
+- [ ] Clara Discord Gateway
+- [ ] Rebecca Dialogflow/Tensorflow AI
+- [ ] Poem Generator

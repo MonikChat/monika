@@ -10,9 +10,9 @@ let client;
 let spPath;
 exports.commands = ['chat'];
 
-exports.init = () => {
+exports.init = bot => {
     client = new dialogflow.SessionsClient();
-    spPath = client.sessionPath(config.dialogFlowSessionID, config.dialogFlowProjectID);
+    spPath = client.sessionPath(bot.config.dialogFlowSessionID, bot.config.dialogFlowProjectID);
 };
 
 

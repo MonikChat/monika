@@ -7,7 +7,6 @@ const Eris = require('eris');
 const got = require('got');
 const fs = require('fs');
 const {CommandHolder} = require(`${__dirname}/modules/CommandHolder`);
-const LocaleManager = require(`${__dirname}/modules/LocaleManager`);
 const Lookups = require(`${__dirname}/modules/Lookups`);
 const path = require('path');
 
@@ -48,7 +47,6 @@ class Clara extends Eris.Client {
         this.prefixes = JSON.parse(fs.readFileSync(path.resolve(`${__dirname}`, '../', './data/prefixes.json'))).concat([config.mainPrefix]);
 
         this.lookups = new Lookups(this);
-        this.localeManager = new LocaleManager();
         this.commands = new CommandHolder(this);
         this.loadCommands = true;
         this.allowCommandUse = false;

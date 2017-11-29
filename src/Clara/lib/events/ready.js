@@ -13,9 +13,6 @@ module.exports = bot => {
             try {
                 bot.prefixes = bot.prefixes.concat([`<@${bot.user.id}> `, `<@!${bot.user.id}> `]);
 
-                await bot.localeManager.loadLocales(bot);
-                logger.info(`Loaded ${Object.keys(bot.localeManager.locales).length} locales.`);
-
                 require(path.resolve(__dirname, '../modules', 'loader'))(bot);
                 logger.info(`Loaded ${bot.commands.length} ${bot.commands.length === 1 ? 'command' : 'commands'}.`);
 
@@ -33,8 +30,8 @@ module.exports = bot => {
         } else {
             logger.info('Reconnected to Discord from disconnection.');
         }
-         if (!bot.config.url && bot.config.gameURL) {
-              await bot.editStatus('online', {
+        if (!bot.config.url && bot.config.gameURL) {
+            await bot.editStatus('online', {
                 name: `${bot.config.gameName || `${bot.config.mainPrefix}help for commands!`} | ${bot.guilds.size} ${bot.guilds.size === 1 ? 'server' : 'servers'}`,
                 type: 0,
                 url: null

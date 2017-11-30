@@ -26,19 +26,22 @@ WIDTH = 720
 HEIGHT = 500
 PADDING = 100 # px
 DEFAULT_FONT = 'm1'
+DEFAULT_BG = Image.open('./backgrounds/poem.jpg')
 
-FONT_SIZES = {
-    'm1': 34, # Monika
-    's1': 34, # Sayori
-    'n1': 28, # Natsuki
-    'y1': 32, # Yuri 1 (Normal)
-    'y2': 40, # Yuri 2 (Fast)
-    'y3': 18  # Yuri 3 (Obsessed)
+# Cache the fonts and backgrounds.
+
+FONTS = {
+    'm1': ImageFont.truetype('./fonts/m1.ttf', 34), # Monika
+    's1': ImageFont.truetype('./fonts/s1.ttf', 34), # Sayori
+    'n1': ImageFont.truetype('./fonts/n1.ttf', 28), # Natsuki
+    'y1': ImageFont.truetype('./fonts/y1.ttf', 32), # Yuri (Normal)
+    'y2': ImageFont.truetype('./fonts/y2.ttf', 40), # Yuri (Fast)
+    'y3': ImageFont.truetype('./fonts/y3.ttf', 18) # Yuri (Obsessed)
 }
 
 BACKGROUNDS = {
-    'y2': 'poem_y1.jpg',
-    'y3': 'poem_y2.jpg'
+    'y2': Image.open('./backgrounds/poem_y1.jpg'),
+    'y3': Image.open('./backgrounds/poem_y2.jpg')
 }
 
 def break_text(text, font, max_width):
@@ -89,11 +92,12 @@ async def handle_request(req):
 
     _font = body.get('font', DEFAULT_FONT)
 
-    if _font not in FONT_SIZES:
+    if _font not in FONTS:
         _font = DEFAULT_FONT
 
-    bg = Image.open('./backgrounds/' + BACKGROUNDS.get(_font, 'poem.jpg'))
-    font = ImageFont.truetype('./fonts/' + _font + '.ttf', FONT_SIZES.get(_font, 14))
+    bg = BACKGROUNDS.get(_font, DEFAULT_BG).copy()
+    font = FONTS[_font]
+
     draw = ImageDraw.Draw(bg)
 
     b = BytesIO()

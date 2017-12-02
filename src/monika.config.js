@@ -17,7 +17,7 @@ module.exports = {
         {
             name: 'Monika.PoemService',
             interpreter: '/user/bin/python36',
-            script: './ImageGenerator/main.py',
+            script: './Sayori/main.py',
             error_file: '../logs/PoemService/err.log',
             out_file: '../logs/PoemService/out.log',
             log_date_format: 'YYYY-MM-DD HH:mm Z',

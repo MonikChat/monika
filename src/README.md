@@ -23,4 +23,4 @@ You have two ways to run the bot and the services:
 
 - [ ] Clara Discord Gateway
 - [ ] Rebecca Dialogflow/Tensorflow AI
-- [ ] Poem Generator
+- [x] Poem Generator

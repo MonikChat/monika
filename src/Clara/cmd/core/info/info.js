@@ -18,49 +18,49 @@ exports.commands = [
 ];
 
 exports.info = {
-    desc: 'Information about the bot.',
+    desc: 'Information about Monika.',
     async main(bot, ctx) {
         let roleColour = ctx.guildBot.roles.sort((a, b) => ctx.guild.roles.get(b).position - ctx.guild.roles.get(a).position)[0];
         roleColour = roleColour ? ctx.guild.roles.get(roleColour).color : 0;
 
         await ctx.createMessage({embed: {
             title: `${bot.user.username}'s Info`,
-            description: `[${bot.localeManager.t('info-source')}](https://github.com/sr229/monika) | [${bot.localeManager.t('info-supportServer')}](https://discord.gg/rmMTZue)`,
+            description: '[Source Code~](https://github.com/sr229/monika) | [Support Server~](https://discord.gg/rmMTZue)',
             thumbnail: {url: bot.user.avatarURL},
-            footer: {text: 'info-footer'},
+            footer: {text: 'Just Monika'},
             color: roleColour,
             fields: [
                 {
-                    name: 'info-guilds',
+                    name: 'Guilds',
                     value: bot.guilds.size,
                     inline: true
                 },
                 {
-                    name: 'info-users',
+                    name: 'Users Seen',
                     value: bot.users.size,
                     inline: true
                 },
                 {
-                    name: 'info-uptime',
+                    name: 'Game Time',
                     value: utils.msToTime(bot.uptime),
                     inline: true
                 },
                 {
-                    name: 'info-shards',
+                    name: 'Hearts',
                     value: bot.shards.size,
                     inline: true
                 },
                 {
-                    name: 'info-mem',
+                    name: 'Memory',
                     value: utils.genBytes(process.memoryUsage().rss),
                     inline: true
                 },
                 {
-                    name: 'info-version',
+                    name: 'Version',
                     value: version, inline:
                     true
                 }
             ]
-        }}, null, 'channel', {name: bot.user.username});
+        }});
     }
 };

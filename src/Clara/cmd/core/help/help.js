@@ -20,14 +20,13 @@ exports.help = {
                 else cmds.push(`${bot.config.mainPrefix}${name}${cmd.usage ? ` ${cmd.usage}` : ''}`);
             });
 
-            await ctx.createMessage('help-sending');
+            await ctx.createMessage('Alright\\~\\~, sending help to our *special* place\\~\\~');
 
             for (let i in cmds) {
                 cmdCollect.push(cmds[i]);
 
                 if (i === '29' || Number(i) === cmds.length - 1) {
                     let embed = new embedTemplate(bot);
-                    embed.title = 'help-commandsAmount';
 
                     if (cmdCollect.length > 15) {
                         embed.fields[0].value = `\`${cmdCollect.slice(0, 15).join('\n')}\``;
@@ -43,16 +42,14 @@ exports.help = {
                     cmdCollect = [];
 
                     try {
-                        await ctx.createMessage({embed}, null, 'author', {
-                            amount: cmds.length
-                        });
+                        await ctx.createMessage({embed}, null, 'author');
                     } catch(err) {
                         return await ctx.createMessage('help-cantSend');
                     }
                 }
             }
         } else {
-            if (!bot.commands.getCommand(ctx.args[0])) return await ctx.createMessage('help-noCommand');
+            if (!bot.commands.getCommand(ctx.args[0])) return await ctx.createMessage("I'm sorry darling, but I don't understand that.");
 
             let cmd = bot.commands.getCommand(ctx.args[0]);
             let embed = {
@@ -79,5 +76,5 @@ function embedTemplate(bot) {
     this.fields = [
         {name: '\u200b', inline: true}
     ];
-    this.footer = {text: 'Just Monika~@'};
+    this.footer = {text: 'Just Monika~~'};
 }

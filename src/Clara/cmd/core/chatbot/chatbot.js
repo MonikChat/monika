@@ -35,7 +35,7 @@ exports.chat = {
  * Creates a response object for Dialogflow.
  * 
  * @param {String} res Response to send
- * @param {String} [lang='em'] Language the response is in. Defaults to en
+ * @param {String} [lang='en'] Language the response is in. Defaults to en
  * @internal
  * @returns {Object} .
  */

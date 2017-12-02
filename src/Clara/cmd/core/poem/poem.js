@@ -13,7 +13,7 @@ exports.poem = {
     usage: '<yuri | yuri2 | yuri3 | natsuki | monika | sayori> <poem>',
     async main(bot, ctx) {
         if (!/^(y(uri)?[1-3]?|m(onika)?|n(atsuki)?|s(ayori)?)$/i.test(ctx.args[0])) return await ctx.createMessage('Hey, provide me which kind of writing style I should use. run "help poem" for the acceptable names.');
-        if (!ctx.args[2]) return await ctx.createMessage('Give me a poem to write with.');
+        if (!ctx.args[1]) return await ctx.createMessage('Give me a poem to write with.');
 
         await ctx.channel.sendTyping();
 

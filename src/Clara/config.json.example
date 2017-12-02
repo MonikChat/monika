@@ -8,8 +8,6 @@
     "gameURL" :"",
     "ownerID": "",
     "maxShards": 1,
-    "ytSearchKey": "",
-    "twitchKey": "",
     "dialogFlowSessionID": "",
     "dialogFlowProjectID": "",
     "nasaKey": "",

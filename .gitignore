@@ -27,3 +27,4 @@ config.json
 data
 logs
 
+package-lock.json

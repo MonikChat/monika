@@ -58,7 +58,7 @@ exports.enable = {
         let pkg = JSON.parse(fs.readFileSync(bot.commandFolders[folders.indexOf(ctx.args[0])] + '/package.json'));
         let mod = `${bot.commandFolders[folders.indexOf(ctx.args[0])]}/${pkg.main}`;
 
-        bot.commands.loadModule(mod);
+        bot.commands.loadCommand(mod);
 
         let unloadedMods = JSON.parse(fs.readFileSync(`${mainDir}/data/unloadedCommands.json`));
         let sliced = unloadedMods.map(f => f.split('/').slice(-1)[0]);
@@ -83,7 +83,7 @@ exports.disable = {
         let pkg = JSON.parse(fs.readFileSync(bot.commandFolders[folders.indexOf(ctx.args[0])] + '/package.json'));
         let mod = `${bot.commandFolders[folders.indexOf(ctx.args[0])]}/${pkg.main}`;
 
-        bot.commands.unloadModule(mod);
+        bot.commands.loadCommand(mod);
         delete require.cache[require.resolve(mod)];
 
         let unloadedMods = JSON.parse(fs.readFileSync(`${mainDir}/data/unloadedCommands.json`));
@@ -106,7 +106,7 @@ exports.reload = {
         let pkg = JSON.parse(fs.readFileSync(bot.commandFolders[folders.indexOf(ctx.args[0])] + '/package.json'));
         let mod = `${bot.commandFolders[folders.indexOf(ctx.args[0])]}/${pkg.main}`;
 
-        bot.commands.reloadModule(mod);
+        bot.commands.reloadCommand(mod);
 
         await ctx.createMessage(`Reloaded module **${ctx.args[0]}**`);
     }

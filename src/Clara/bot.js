@@ -9,7 +9,6 @@
 
 // Imports
 const Clara = require(`${__dirname}/lib/Clara`);
-const fs = require('fs');
 const config = require(`${__dirname}/config.json`);
 
 // Globals
@@ -39,8 +38,6 @@ Promise.config({
     warnings: {wForgottenReturn: config.promiseWarnings || false},
     longStackTraces: config.promiseWarnings || false
 });
-
-if (!fs.existsSync(`${__dirname}/cache`)) fs.mkdirSync(`${__dirname}/cache/`);
 
 require(`${__dirname}/lib/events`)(bot);
 bot.connect();

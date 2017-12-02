@@ -14,7 +14,10 @@
         "discord",
         "bot"
     ],
-    "author": [ "sr229", "FiniteReality"],
+    "author": [
+        "sr229",
+        "FiniteReality"
+    ],
     "license": "MIT",
     "bugs": {
         "url": "https://github.com/sr229/monika/issues"

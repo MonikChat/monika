@@ -8,7 +8,6 @@
     "gameURL" :"",
     "ownerID": "",
     "maxShards": 1,
-    "dialogFlowSessionID": "",
     "dialogFlowProjectID": "",
     "nasaKey": "",
     "discordBotsPWKey": "",

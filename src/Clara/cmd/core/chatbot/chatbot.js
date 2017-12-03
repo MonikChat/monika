@@ -12,7 +12,7 @@ exports.commands = ['chat'];
 
 exports.init = bot => {
     client = new dialogflow.SessionsClient();
-    spPath = client.sessionPath(bot.config.dialogFlowSessionID, bot.config.dialogFlowProjectID);
+    spPath = client.sessionPath(Math.floor(Math.random() * 3000/2), bot.config.dialogFlowProjectID);
 };
 
 

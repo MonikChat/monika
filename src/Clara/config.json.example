@@ -1,0 +1,15 @@
+{
+    "token": "",
+    "debug": true,
+    "promiseWarnings": false,
+    "ibKey": "",
+    "mainPrefix": "?",
+    "gameName" : "",
+    "gameURL" :"",
+    "ownerID": "",
+    "maxShards": 1,
+    "dialogFlowProjectID": "",
+    "nasaKey": "",
+    "discordBotsPWKey": "",
+    "discordBotsOrgKey": ""
+}

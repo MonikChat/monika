@@ -1,0 +1,6 @@
+{
+  "main": "chatbot.js",
+  "dependencies": {
+    "dialogflow": "0.1.0"
+  }
+}

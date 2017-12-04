@@ -1,3 +1,7 @@
+[Unit]
+
+Description = Monika Gateway
+
 [Service]
 
 # what binaries to exec. absolute paths only
@@ -14,7 +18,7 @@ WorkingDirectory=/home/user/monika
 # What to exec when errored out
 # default sleep 3000
 
-ExecStop= sleep 3000
+ExecStop= /bin/sleep 3000
 
 [Install]
 

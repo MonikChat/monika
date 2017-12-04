@@ -6,13 +6,15 @@
  */
 
 const dialogflow = require('dialogflow');
+const uuid = require('uuid/v4');
 let client;
 let spPath;
 exports.commands = ['chat'];
 
 exports.init = bot => {
     client = new dialogflow.SessionsClient();
-    spPath = client.sessionPath(Math.floor(Math.random() * 3000/2), bot.config.dialogFlowProjectID);
+    // @FiniteReality requested to use random UUIDs instead
+    spPath = client.sessionPath(uuid.uuidv4(), bot.config.dialogFlowProjectID);
 };
 
 

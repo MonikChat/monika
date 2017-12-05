@@ -14,7 +14,8 @@ exports.commands = ['chat'];
 exports.init = bot => {
     client = new dialogflow.SessionsClient();
     // @FiniteReality requested to use random UUIDs instead
-    spPath = client.sessionPath(uuid.uuidv4(), bot.config.dialogFlowProjectID);
+    if (!bot.config.dialogFlowProjectID || !typeof bot.config.dialogFlowProjectID === 'string') throw new Error('dialogFlowProjectID is not a string');
+    else spPath = client.sessionPath(uuid.uuidv4(), bot.config.dialogFlowProjectID);
 };
 
 

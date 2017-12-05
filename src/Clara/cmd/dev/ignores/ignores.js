@@ -17,12 +17,12 @@ exports.main = {
     owner: true,
     async main(bot, ctx) {
         let embed = {
-            title: 'Blacklisted Users',
+            title: 'Ignored Users',
             description: []
         };
 
         if (bot.blacklist.length === 0) {
-            embed.description = 'No one.';
+            embed.description = 'You did not ask me to ignore anyone, Anon~!';
             return await ctx.createMessage({embed});
         }
 
@@ -44,17 +44,17 @@ exports.add = {
     desc: 'Add a user to the blacklist.',
     usage: '<mention|id>',
     async main(bot, ctx) {
-        if (!/^(<@!?\d+>|\d+)$/.test(ctx.args[0])) return await ctx.createMessage('Please mention the user to add, or their id.');
+        if (!/^(<@!?\d+>|\d+)$/.test(ctx.args[0])) return await ctx.createMessage('Please mention the user to ignore, or their id.');
         let id = /^<@!?\d+>$/.test(ctx.args[0]) ? ctx.args[0].replace(/^<@!?/, '').slice(0, -1) : ctx.args[0];
 
-        if (!bot.users.get(id)) return await ctx.createMessage('That user does not exist or I cannot see them.');
+        if (!bot.users.get(id)) return await ctx.createMessage(`Ehehe~ I can't find him here ${ctx.author.username}-kun~! Why are you asking me to ignore them?`);
     
         let newBlacklist = bot.blacklist.concat(id);
         let data = {admins: bot.blacklist, blacklist: newBlacklist};
 
         fs.writeFileSync(`./data/data.json`, JSON.stringify(data));
         bot.blacklist.push(id);
-        await ctx.createMessage(`Added user **${utils.formatUsername(bot.users.get(id))}** to the blacklist.`);
+        await ctx.createMessage(`I won't talk to **${utils.formatUsername(bot.users.get(id))}** anymore.`);
     }
 };
 
@@ -66,7 +66,7 @@ exports.remove = {
 
         let id = /^<@!?\d+>$/.test(ctx.args[0]) ? ctx.args[0].replace(/^<@!?/, '').slice(0, -1) : ctx.args[0];
 
-        if (!bot.blacklist.includes(id)) return await ctx.createMessage('That user is not on the blacklist.');
+        if (!bot.blacklist.includes(id)) return await ctx.createMessage(`Huh, you did not seem to ask me to ignore him, ${ctx.author.username}-kun..` );
 
         let newBlacklist = bot.blacklist.filter(b => b !== id);
         let data = {admins: bot.admins, blacklist: newBlacklist};
@@ -75,9 +75,9 @@ exports.remove = {
         bot.blacklist.splice(bot.blacklist.indexOf(id), 1);
 
         if (!bot.users.get(id)) {
-            await ctx.createMessage(`Removed user **${id}** from the blacklist.`);
+            await ctx.createMessage(`I will no longer ignore **${id}**.`);
         } else {
-            await ctx.createMessage(`Removed user **${utils.formatUsername(bot.users.get(id))}** from the blacklist.`);
+            await ctx.createMessage(`I will no longer ignore **${utils.formatUsername(bot.users.get(id))}**.`);
         }
     }
 };

@@ -47,7 +47,7 @@ exports.add = {
         if (!/^(<@!?\d+>|\d+)$/.test(ctx.args[0])) return await ctx.createMessage('Please mention the user to ignore, or their id.');
         let id = /^<@!?\d+>$/.test(ctx.args[0]) ? ctx.args[0].replace(/^<@!?/, '').slice(0, -1) : ctx.args[0];
 
-        if (!bot.users.get(id)) return await ctx.createMessage(`Ehehe~ I can't find him here ${ctx.author.username}-kun~! Why are you asking me to ignore them?`);
+        if (!bot.users.get(id)) return await ctx.createMessage(`Ehehe~ I can't find them here ${ctx.author.username}-kun~! Why are you asking me to ignore them?`);
     
         let newBlacklist = bot.blacklist.concat(id);
         let data = {admins: bot.blacklist, blacklist: newBlacklist};

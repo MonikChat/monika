@@ -31,12 +31,12 @@ exports.info = {
             color: roleColour,
             fields: [
                 {
-                    name: 'Guilds',
+                    name: 'Clubs',
                     value: bot.guilds.size,
                     inline: true
                 },
                 {
-                    name: 'Users Seen',
+                    name: 'Members',
                     value: bot.users.size,
                     inline: true
                 },

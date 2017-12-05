@@ -30,7 +30,7 @@ module.exports = bot => {
         } else {
             logger.info('Reconnected to Discord from disconnection.');
         }
-        if (!bot.config.url && bot.config.gameURL) {
+        if (!bot.config.url && !bot.config.gameURL) {
             await bot.editStatus('online', {
                 name: `${bot.config.gameName || `${bot.config.mainPrefix}help for commands!`} | ${bot.guilds.size} ${bot.guilds.size === 1 ? 'server' : 'servers'}`,
                 type: 0,

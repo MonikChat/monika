@@ -44,7 +44,7 @@ exports.help = {
                     try {
                         await ctx.createMessage({embed}, null, 'author');
                     } catch(err) {
-                        return await ctx.createMessage('help-cantSend');
+                        return await ctx.createMessage(`Oh my, ${ctx.author.mention}-kun, I can't send a message there...`);
                     }
                 }
             }

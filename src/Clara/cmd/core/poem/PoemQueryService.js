@@ -24,7 +24,7 @@
      /**
       * Generates a poem based from a input
       * @param {String} font the font to use. Acceptable inputs are documented at https://github.com/MonikaDesu/Sayori
-      * @param {String} the content.
+      * @param {String} content the content.
       * @returns {Promise<Object>} The response from the API.
       */
      generatePoem(font, content) {

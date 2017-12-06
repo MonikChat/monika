@@ -1,4 +1,0 @@
-[submodule "src/Sayori"]
-	path = src/Sayori
-	url = https://github.com/MonikaDesu/Sayori.git
-	branch = master

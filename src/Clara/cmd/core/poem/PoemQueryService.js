@@ -36,7 +36,7 @@
                  json: true,
                  body: {
                      poem: content,
-                     font: font
+                     font
                  }
              })
              .then(res => {

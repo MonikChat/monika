@@ -2,7 +2,6 @@
     "token": "",
     "debug": true,
     "promiseWarnings": false,
-    "ibKey": "",
     "mainPrefix": "?",
     "gameName" : "",
     "gameURL" :"",

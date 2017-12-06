@@ -29,7 +29,16 @@
       */
      generatePoem(font, content) {
          return new Promise((resolve, reject) => {
-             got(`${this.serviceHost}/generate`)
+             got(`${this.serviceHost}/generate`, {
+                 //force encoding to utf-8
+                 encoding:'utf8',
+                 method: 'POST',
+                 json: true,
+                 body: {
+                     poem: content,
+                     font: font
+                 }
+             })
              .then(res => {
                  resolve(res.body);
              })

@@ -4,6 +4,7 @@
  */
 
 const got = require('got');
+const URL_REGEX = /^(https?:\/\/)?(((www\.)?[a-zA-Z0-9\.\-\_]+(\.[a-zA-Z]{2,3})+)|(\b(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\b))(:[0-9]+)?(\/[a-zA-Z0-9\_\-\s\.\/\?\%\#\&\=]*)?$/i; // eslint-disable-line
 
 /**
  * Simple handler for the [Sayori]{@link https://github.com/MonikaDesu/Sayori/} poem generator service.
@@ -18,6 +19,7 @@ class PoemHandler {
         host = host || 'http://127.0.0.1:8080';
 
         if (typeof host !== 'string') throw new TypeError('host is not a string.');
+        if (!URL_REGEX.test(host)) throw new Error('host does not match URL regex.');
 
         this.host = host;
     }

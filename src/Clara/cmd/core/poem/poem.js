@@ -4,10 +4,16 @@
  * @author Ovyerus
  */
 
+const PoemHandler = require('./PoemHandler');
+let handler;
+
 exports.commands = [
     'poem'
 ];
 
+exports.init = bot => {
+    handler = new PoemHandler(bot.config.sayoriHost);
+}
 exports.poem = {
     desc: 'Make a poem!',
     usage: '<yuri | yuri2 | yuri3 | natsuki | monika | sayori> <poem>',
@@ -22,16 +28,10 @@ exports.poem = {
         if (character === 'y' && /[1-3]$/.test(ctx.args[0])) character += ctx.args[0].slice(-1);
         else character += '1';
 
-        let res = await got.post('http://127.0.0.1:8080/generate', {
-            encoding: null,
-            body: JSON.stringify({
-                poem: ctx.cleanSuffix.split(' ').slice(1).join(' '),
-                font: character
-            })
-        });
+        let res = await handler.generatePoem(ctx.cleanSuffix.split(' ').slice(1).join(' '), character);
 
         await ctx.createMessage({}, {
-            file: res.body,
+            file: res,
             name: 'poem.png'
         });
     }

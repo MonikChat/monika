@@ -52,7 +52,7 @@ exports.add = {
         let newBlacklist = bot.blacklist.concat(id);
         let data = {admins: bot.blacklist, blacklist: newBlacklist};
 
-        fs.writeFileSync(`./data/data.json`, JSON.stringify(data));
+        fs.writeFileSync(`${mainDir}/data/data.json`, JSON.stringify(data));
         bot.blacklist.push(id);
         await ctx.createMessage(`I won't talk to **${utils.formatUsername(bot.users.get(id))}** anymore.`);
     }
@@ -71,7 +71,7 @@ exports.remove = {
         let newBlacklist = bot.blacklist.filter(b => b !== id);
         let data = {admins: bot.admins, blacklist: newBlacklist};
 
-        fs.writeFileSync(`./data/data.json`, JSON.stringify(data));
+        fs.writeFileSync(`${mainDir}/data/data.json`, JSON.stringify(data));
         bot.blacklist.splice(bot.blacklist.indexOf(id), 1);
 
         if (!bot.users.get(id)) {

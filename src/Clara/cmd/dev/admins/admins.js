@@ -42,7 +42,7 @@ exports.add = {
         let newAdmins = bot.admins.concat(id);
         let data = {admins: newAdmins, blacklist: bot.blacklist};
 
-        fs.writeFileSync(`./data/data.json`, JSON.stringify(data));
+        fs.writeFileSync(`${mainDir}/data/data.json`, JSON.stringify(data));
         bot.admins.push(id);
         await ctx.createMessage(`Added admin **${utils.formatUsername(bot.users.get(id))}**.`);
     }
@@ -63,7 +63,7 @@ exports.remove = {
         let newAdmins = bot.admins.filter(a => a !== id);
         let data = {admins: newAdmins, blacklist: bot.blacklist};
 
-        fs.writeFileSync(`./data/data.json`, JSON.stringify(data));
+        fs.writeFileSync(`${mainDir}/data/data.json`, JSON.stringify(data));
         bot.admins.splice(bot.admins.indexOf(id), 1);
         await ctx.createMessage(`Removed admin **${utils.formatUsername(bot.users.get(id))}**.`);
     }

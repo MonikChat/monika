@@ -19,6 +19,7 @@ exports.commands = [
 
 exports.info = {
     desc: 'Information about Monika.',
+    owner: true,
     async main(bot, ctx) {
         let roleColour = ctx.guildBot.roles.sort((a, b) => ctx.guild.roles.get(b).position - ctx.guild.roles.get(a).position)[0];
         roleColour = roleColour ? ctx.guild.roles.get(roleColour).color : 0;

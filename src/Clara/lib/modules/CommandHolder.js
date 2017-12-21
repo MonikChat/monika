@@ -234,8 +234,8 @@ class CommandHolder {
 
         let cmd = this.getCommand(ctx.cmd);
 
-        if (!cmd && this.getCommand('chat')) cmd = this.getCommand('chat');
-        else if (!cmd) return;
+        if (!cmd) cmd = this.getCommand('chat');
+        else return;
 
         if (cmd.subcommands && cmd.subcommands[ctx.args[0]]) {
             let subcommand = ctx.args[0];

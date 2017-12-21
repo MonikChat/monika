@@ -2,6 +2,15 @@
 
 this is the MaaS concept bot, at the moment, it's all barebones but we have at least two services done.
 
+## Setting up
+
+First, we need to clone all the submodules.
+
+```bash
+$ git submodule update --init
+```
+And from that, you should be able to run the bot and its required components.
+
 ## Running
 
 You will need Node 8.10.0 and above with pm2 installed globally.
@@ -15,7 +24,7 @@ You have two ways to run the bot and the services:
 
 - **systemd**
  
-  We provided a template for systemd in `systemd`. Edit it out and cp to `/etc/systemd/system`. Then you need to run `systemctl start Monika.Discord` (assuming you kept the filename intact prior to cp). 
+  We provided a template for systemd in `systemd`. Edit it out and cp to `/etc/systemd/system`. Then you need to run `systemctl start Monika.Discord` (assuming you kept the filename intact prior to cp). Note you still need PM2 to run the bot and its services successfully.
 
   Protip : Run it as a user spawned service, not as a service with priviledges.
 

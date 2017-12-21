@@ -15,7 +15,7 @@ You have two ways to run the bot and the services:
 
 - **systemd**
  
-  We provided a template for systemd in `systemd`. Edit it out and cp to `/etc/systemd/system`. Then you need to run `systemctl start Monika.Discord` (assuming you kept the filename intact prior to cp). 
+  We provided a template for systemd in `systemd`. Edit it out and cp to `/etc/systemd/system`. Then you need to run `systemctl start Monika.Discord` (assuming you kept the filename intact prior to cp). Note you still need PM2 to run the bot and its services successfully.
 
   Protip : Run it as a user spawned service, not as a service with priviledges.
 

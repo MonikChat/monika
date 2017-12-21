@@ -2,6 +2,15 @@
 
 this is the MaaS concept bot, at the moment, it's all barebones but we have at least two services done.
 
+## Setting up
+
+First, we need to clone all the submodules.
+
+```bash
+$ git submodule update --init
+```
+And from that, you should be able to run the bot and its required components.
+
 ## Running
 
 You will need Node 8.10.0 and above with pm2 installed globally.

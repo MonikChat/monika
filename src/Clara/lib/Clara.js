@@ -6,9 +6,7 @@
 const Eris = require('eris');
 const got = require('got');
 const fs = require('fs');
-const Redite = require('redite');
 const {CommandHolder} = require(`${__dirname}/modules/CommandHolder`);
-const LocaleManager = require(`${__dirname}/modules/LocaleManager`);
 const Lookups = require(`${__dirname}/modules/Lookups`);
 const path = require('path');
 
@@ -21,7 +19,6 @@ const path = require('path');
  * @prop {CommandHolder} commands Command holder object.
  * @prop {String[]} commandFolders todo
  * @prop {ClaraConfig} config Configuration passed during construction.
- * @prop {Redite} db Database connection manager.
  * @prop {Boolean} loadCommands If the bot should load commands or not.
  * @prop {String[]} prefixes Array of all the prefixes that are able to be used by the bot.
  * @prop {Object} settings Settings cache for users and guilds.
@@ -50,9 +47,7 @@ class Clara extends Eris.Client {
         this.prefixes = JSON.parse(fs.readFileSync(path.resolve(`${__dirname}`, '../', './data/prefixes.json'))).concat([config.mainPrefix]);
 
         this.lookups = new Lookups(this);
-        this.localeManager = new LocaleManager();
         this.commands = new CommandHolder(this);
-        this.db = new Redite({url: config.redisURL || config.redisUrl || 'redis://127.0.0.1/0'});
 
         this.loadCommands = true;
         this.allowCommandUse = false;
@@ -190,92 +185,6 @@ class Clara extends Eris.Client {
         this.blacklist = res.blacklist;
     }
 
-    /**
-    * Initialize settings for a guild.
-    *
-    * @param {String} guildID ID of guild to init settings for.
-    * @returns {Object} Settings for the guild.
-    */
-    async initGuildSettings(guildID) {
-        if (typeof guildID !== 'string') throw new TypeError('guildID is not a string.');
-        if (await this.db.has(guildID)) return await this.db.guildID.get;
-
-        let settings = {
-            id: guildID,
-            locale: 'en-UK',
-            greeting: {
-                enabled: false,
-                channelID: null,
-                message: null
-            },
-            goodbye: {
-                enabled: false,
-                channelID: null,
-                message: null
-            },
-            ranks: {
-                limit: 0,
-                roles: []
-            }
-        };
-        
-        await this.db[guildID].set(settings);
-        return settings;
-    }
-
-    /**
-    * Get the settings for a guild.
-    *
-    * @param {String} guildID ID of guild to get settings for
-    * @returns {Object} Settings for the guild.
-    */
-    async getGuildSettings(guildID) {
-        if (typeof guildID !== 'string') throw new TypeError('guildID is not a string.');
-        if (!await this.db.has(guildID)) return await this.initGuildSettings(guildID);
-
-        return await this.db[guildID].get;
-    }
-
-    /**
-    * Initialize settings for a user.
-    *
-    * @param {String} userID ID of user to init settings for.
-    * @returns {Object} Settings for the user.
-    */
-    async initUserSettings(userID) {
-        if (typeof userID !== 'string') throw new TypeError('userID is not a string.');
-        if (await this.db.has(userID)) return await this.db[userID].get;
-
-        let settings = {
-            id: userID,
-            locale: 'en-UK',
-            partner: null
-        };
-
-        await this.db[userID].set(settings);
-        return settings;
-    }
-
-    /**
-    * Get the settings for a user.
-    *
-    * @param {String} userID ID of user to get settings for.
-    * @returns {Object} Settings for the user.
-    */
-    async getUserSettings(userID) {
-        if (typeof userID !== 'string') throw new TypeError('userID is not a string.');
-        if (!await this.db.has(userID)) return await this.initUserSettings(userID);
-        
-        return await this.db[userID].get;
-    }
-
-    /**
-     * Check if the bot has a permission in a channel.
-     * 
-     * @param {String} permission The permission to check.
-     * @param {Eris.Channel} channel The channel to check.
-     * @returns {Boolean} If the user has the permission.
-     */
     hasPermission(permission, channel) {
         // Check if permission actually exists.
         if (!Object.keys(Eris.Constants.Permissions).includes(permission)) return false;

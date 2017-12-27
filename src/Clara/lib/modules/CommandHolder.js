@@ -82,7 +82,7 @@ class CommandHolder {
      * @throws {TypeError} Argument must be correct type
      * @throws {Error} Module must not be loaded already.
      */
-    loadCommand(moduleName) {
+    loadModule(moduleName) {
         if (typeof moduleName !== 'string') throw new TypeError('moduleName is not a string.');
 
         let name = moduleName.split(/\\|\//).slice(-1)[0].slice(0, -3);
@@ -165,7 +165,7 @@ class CommandHolder {
             return;
         }
 
-        logger.custom('CommandHolder/loadCommand', `Loaded module '${name}'`);
+        logger.custom('CommandHolder/loadModule', `Loaded module '${name}'`);
     }
 
     /**
@@ -175,7 +175,7 @@ class CommandHolder {
      * @throws {TypeError} Argument must be correct type.
      * @throws {Error} Module must be loaded already.
      */
-    unloadCommand(moduleName) {
+    unloadModule(moduleName) {
         if (typeof moduleName !== 'string') throw new TypeError('moduleName is not a string.');
 
         let name = moduleName.split(/\\|\//).slice(-1)[0].slice(0, -3);
@@ -193,7 +193,7 @@ class CommandHolder {
         delete this.modules[name];
         delete require.cache[require.resolve(moduleName)];
 
-        logger.custom('CommandHolder/removeCommand', `Removed module '${name}'`);
+        logger.custom('CommandHolder/unloadModule', `Removed module '${name}'`);
     }
 
     /**
@@ -203,15 +203,15 @@ class CommandHolder {
      * @throws {TypeError} Argument must be correct type.
      * @throws {Error} Module must already be loaded.
      */
-    reloadCommand(moduleName) {
+    reloadModule(moduleName) {
         if (typeof moduleName !== 'string') throw new TypeError('moduleName is not a string.');
         if (!this.modules[moduleName.split(/\/|\\/g).slice(-1)[0].slice(0, -3)]) {
-            this.loadCommand(moduleName);
+            this.loadModule(moduleName);
             return;
         }
 
-        this.unloadCommand(moduleName);
-        this.loadCommand(moduleName);
+        this.unloadModule(moduleName);
+        this.reloadModule(moduleName);
     }
 
     /**
@@ -234,8 +234,7 @@ class CommandHolder {
 
         let cmd = this.getCommand(ctx.cmd);
 
-        if (!cmd) cmd = this.getCommand('chat');
-        else return;
+        if (!cmd) return;
 
         if (cmd.subcommands && cmd.subcommands[ctx.args[0]]) {
             let subcommand = ctx.args[0];
@@ -456,6 +455,7 @@ let _msg = Symbol();
  * @prop {Eris.Member} guildBot The member object of the bot.
  * @prop {String[]} mentionStrings Raw IDs of all users mentioned. May contain non-existant users.
  * @prop {String} suffix Arguments joined with spaces.
+ * @prop {Object} settings Settings for the guild.
  * @see http://eris.tachibana.erendale.abal.moe/Eris/docs/Message
  */
 class Context {
@@ -464,11 +464,13 @@ class Context {
      * 
      * @param {Eris.Message} msg Message to inherit from.
      * @param {Eris.Client} bot Bot instance to help with some parsing.
+     * @param {Object} settings Settings to assign to context.
     */
-    constructor(msg, bot) {
+    constructor(msg, bot, settings) {
         // Validate all objects are the types we want.
         if (!(msg instanceof Eris.Message)) throw new TypeError('msg is not a message.');
         if (!(bot instanceof Eris.Client)) throw new TypeError('bot is not a client.');
+        if (!settings || typeof settings !== 'object') throw new TypeError('settings is not an object.');
 
         // Inherit properties from the message and assign it a private value.
         Object.assign(this, msg);
@@ -483,6 +485,7 @@ class Context {
         this.cleanSuffix = msg.content.split(this.cmd).slice(1).join(this.cmd).trim();
 
         this.guildBot = msg.channel.guild.members.get(bot.user.id);
+        this.settings = settings;
 
         // Get mention strings.
         this.mentionStrings = msg.content.match(/<@!?\d+>/g) || [];
@@ -535,14 +538,48 @@ class Context {
      * @param {(String|Object)} content Content to send. If object, same as Eris options.
      * @param {Object} [file] File to send. Same as Eris file.
      * @param {String} [where=channel] Where to send the message. Either 'channel' or 'author'.
+     * @param {Object} [replacers={}] Options to use for replacing in translations.
      * @returns {Eris.Message} The sent message.
      * @see http://eris.tachibana.erendale.abal.moe/Eris/docs/Channel#function-createMessage
      */
-    async createMessage(content, file, where='channel') {
+    async createMessage(content, file, where='channel', replacers={}) {
         if (typeof where !== 'string') throw new TypeError('where is not a string.');
         if (!['channel', 'author'].includes(where)) throw new Error('where is an invalid place. Must either by `channel` or `author`');
+            
+        if (content.embed && typeof content.embed.color !== 'number') content.embed.color = utils.randomColour();
+        let locale = this.settings.locale;
 
-        if (content && content.embed && typeof content.embed.color !== 'number') content.embed.color = utils.randomColour();
+        if (typeof content === 'string') {
+            content = this.client.localeManager.t(content, locale, replacers);
+        } else if (content.content || content.embed) {
+            if (content.content) content.content = this.client.localeManager.t(content, locale, replacers);
+
+            if (content.embed) {
+                for (let key in content.embed) {
+                    if (['url', 'type', 'timestamp', 'color', 'fields', 'thumbnail', 'image', 'video', 'provider'].includes(key)) continue;
+
+                    let item = content.embed[key];
+
+                    if (['title', 'description'].includes(key)) {
+                        content.embed[key] = this.client.localeManager.t(item, locale, replacers);
+                    } else if (key === 'author' && item.name) {
+                        content.embed[key].name = this.client.localeManager.t(item.name, locale, replacers);
+                    } else if (key === 'footer' && item.text) {
+                        content.embed[key].text = this.client.localeManager.t(item.text, locale, replacers);
+                    }
+                }
+
+                if (content.embed.fields) {
+                    content.embed.fields.forEach((v, i, a) => {
+                        if (typeof v.name === 'string') a[i].name = this.client.localeManager.t(v.name, locale, replacers);
+                        else a[i].name = v.name.toString();
+
+                        if (typeof v.value === 'string') a[i].value = this.client.localeManager.t(v.value, locale, replacers);
+                        else a[i].value = v.value.toString();
+                    });
+                }
+            }
+        }
 
         if (!this.hasPermission('embedLinks') && content && content.embed) content = Context.flattenEmbed(content.embed);
 

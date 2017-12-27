@@ -11,9 +11,9 @@ const {Context} = require(path.resolve(__dirname, '../modules', 'CommandHolder')
 var version;
 
 try {
-    version = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../../../', './package.json'))).version;
+    version = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../', '../', './package.json'))).version;
 } catch(_) {
-    version = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../../../../', './package.json'))).version;
+    version = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../', '../', '../', './package.json'))).version;
 }
 
 module.exports = bot => {
@@ -29,7 +29,12 @@ module.exports = bot => {
          
         if (!bot.commands.getCommand(cmd) && !(RegExp(`^<@!?${bot.user.id}>\s?.+$`) && bot.commands.getCommand('chat'))) return; // eslint-disable-line
 
-        let ctx = new Context(msg, bot);
+        let settings = {};
+        settings.guild = await bot.getGuildSettings(msg.channel.guild.id);
+        settings.user = await bot.getUserSettings(msg.author.id);
+        settings.locale = settings.user.locale !== bot.localeManager.defaultLocale ? settings.user.locale : settings.guild.locale;
+
+        let ctx = new Context(msg, bot, settings);
         ctx.cmd = cmd;
 
         try {
@@ -76,7 +81,7 @@ module.exports = bot => {
                     description: `An error occurred while trying to execute command \`${cmd}\``,
                     color: 0xF44336,
                     timestamp: new Date(),
-                    footer: {text: `Monika Version ${version}`},
+                    footer: {text: `Clara Version ${version}`},
                     fields: [
                         {
                             name: '\u200b',
@@ -103,7 +108,7 @@ module.exports = bot => {
                     description: `An error occurred while trying to execute command \`${cmd}\``,
                     color: 0xF44336,
                     timestamp: new Date(),
-                    footer: {text: `Monika Version ${version}`},
+                    footer: {text: `Clara Version ${version}`},
                     fields: [
                         {
                             name: '\u200b',

@@ -6,7 +6,9 @@
 const Eris = require('eris');
 const got = require('got');
 const fs = require('fs');
+const Redite = require('redite');
 const {CommandHolder} = require(`${__dirname}/modules/CommandHolder`);
+const LocaleManager = require(`${__dirname}/modules/LocaleManager`);
 const Lookups = require(`${__dirname}/modules/Lookups`);
 const path = require('path');
 
@@ -19,6 +21,7 @@ const path = require('path');
  * @prop {CommandHolder} commands Command holder object.
  * @prop {String[]} commandFolders todo
  * @prop {ClaraConfig} config Configuration passed during construction.
+ * @prop {Redite} db Database connection manager.
  * @prop {Boolean} loadCommands If the bot should load commands or not.
  * @prop {String[]} prefixes Array of all the prefixes that are able to be used by the bot.
  * @prop {Object} settings Settings cache for users and guilds.
@@ -47,7 +50,10 @@ class Clara extends Eris.Client {
         this.prefixes = JSON.parse(fs.readFileSync(path.resolve(`${__dirname}`, '../', './data/prefixes.json'))).concat([config.mainPrefix]);
 
         this.lookups = new Lookups(this);
+        this.localeManager = new LocaleManager();
         this.commands = new CommandHolder(this);
+        this.db = new Redite({url: config.redisURL || config.redisUrl || 'redis://127.0.0.1/0'});
+
         this.loadCommands = true;
         this.allowCommandUse = false;
     }
@@ -185,6 +191,85 @@ class Clara extends Eris.Client {
     }
 
     /**
+    * Initialize settings for a guild.
+    *
+    * @param {String} guildID ID of guild to init settings for.
+    * @returns {Object} Settings for the guild.
+    */
+    async initGuildSettings(guildID) {
+        if (typeof guildID !== 'string') throw new TypeError('guildID is not a string.');
+        if (await this.db.has(guildID)) return await this.db.guildID.get;
+
+        let settings = {
+            id: guildID,
+            locale: 'en-UK',
+            greeting: {
+                enabled: false,
+                channelID: null,
+                message: null
+            },
+            goodbye: {
+                enabled: false,
+                channelID: null,
+                message: null
+            },
+            ranks: {
+                limit: 0,
+                roles: []
+            }
+        };
+        
+        await this.db[guildID].set(settings);
+        return settings;
+    }
+
+    /**
+    * Get the settings for a guild.
+    *
+    * @param {String} guildID ID of guild to get settings for
+    * @returns {Object} Settings for the guild.
+    */
+    async getGuildSettings(guildID) {
+        if (typeof guildID !== 'string') throw new TypeError('guildID is not a string.');
+        if (!await this.db.has(guildID)) return await this.initGuildSettings(guildID);
+
+        return await this.db[guildID].get;
+    }
+
+    /**
+    * Initialize settings for a user.
+    *
+    * @param {String} userID ID of user to init settings for.
+    * @returns {Object} Settings for the user.
+    */
+    async initUserSettings(userID) {
+        if (typeof userID !== 'string') throw new TypeError('userID is not a string.');
+        if (await this.db.has(userID)) return await this.db[userID].get;
+
+        let settings = {
+            id: userID,
+            locale: 'en-UK',
+            partner: null
+        };
+
+        await this.db[userID].set(settings);
+        return settings;
+    }
+
+    /**
+    * Get the settings for a user.
+    *
+    * @param {String} userID ID of user to get settings for.
+    * @returns {Object} Settings for the user.
+    */
+    async getUserSettings(userID) {
+        if (typeof userID !== 'string') throw new TypeError('userID is not a string.');
+        if (!await this.db.has(userID)) return await this.initUserSettings(userID);
+        
+        return await this.db[userID].get;
+    }
+
+    /**
      * Check if the bot has a permission in a channel.
      * 
      * @param {String} permission The permission to check.
@@ -224,12 +309,18 @@ class Clara extends Eris.Client {
  * @prop {String} discordBotsPWKey API key to use for posting stats to bots.discord.pw.
  * @prop {String} gameName Text to use for playing status.
  * @prop {String} gameURL Stream url for playing status. Must be a Twitch link.
+ * @prop {String} ibKey API key to use for ibsear.ch.
  * @prop {String} mainPrefix Default prefix for the bot.
  * @prop {Number} maxShards Maximum number of shards for the bot to use.
+ * @prop {String} nasaKey API key for the NASAS commands.
+ * @prop {String} osuApiKey API key to use for osu! commands.
  * @prop {String} ownerID ID of the person who has the most permissions for the bot.
  * @prop {Boolean} promiseWarnings Whether to get the shitty errors from the Promise library.
+ * @prop {Object} redisUrl `redis://` url to connect to. Defaults to `redis://127.0.0.1/0`
  * @prop {String} sauceKey API key to use for SauceNAO.
  * @prop {String} token Token to use when connecting to Discord.
+ * @prop {String} twitchKey Key to use for Twitch.
+ * @prop {String} ytSearchKey Key to use for searching YouTube tracks.
  */
 class ClaraConfig { // eslint-disable-line
     // Only here for documentation purposes.

@@ -5,6 +5,7 @@
  * @author FiniteReality
  */
 
+const responses = require('./emptyResponseDialogues.json');
 exports.commands = ['chat'];
 
 exports.chat = {
@@ -12,7 +13,8 @@ exports.chat = {
     usage: '<message>',
     async main(bot, ctx) {
         if(!ctx.suffix) {
-            await ctx.createMessage('Ehehe~, What is it?');
+            let dialogue = responses[Math.floor(Math.random() * responses.length)];
+            await ctx.createMessage(dialogue);
         } else {
             //TODO : Response Object Model for Rebecca
             throw new Error('not implemented.');

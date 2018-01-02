@@ -34,6 +34,7 @@ try {
         discordBotsOrgKey: process.env.DISCORD_ORG_TOKEN,
         twitchKey: process.env.TWITCH_TOKEN,
         nasaKey: process.env.NASA_KEY,
+        sayoriHost: process.env.POEM_HOST,
         redisURL: process.env.REDIS_URL || 'redis://127.0.0.1/0'
     };
 }

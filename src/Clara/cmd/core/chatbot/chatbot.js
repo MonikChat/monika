@@ -23,31 +23,12 @@ exports.chat = {
     desc: 'Chat to Monika',
     usage: '<message>',
     async main(bot, ctx) {
-        if (!ctx.suffix) {
-            let result = await client.detectIntent(__createResponseObject('hey', 'en'));
-            await ctx.createMessage(result[0].queryResult.queryText);
+        if(!ctx.suffix) {
+            await ctx.createMessage('Ehehe~, What is it?');
         } else {
-            let result = await client.detectIntent(__createResponseObject(ctx.createMessage, 'en'));
-            await ctx.createMessage(result[0].queryResult.queryText);
+            //TODO : Response Object Model for Rebecca
+            throw new Error('not implemented.');
         }
     }
 };
 
-
-/**
- * Creates a response object for Dialogflow.
- * 
- * @param {String} res Response to send
- * @param {String} [lang='en'] Language the response is in. Defaults to en
- * @internal
- * @returns {Object} .
- */
-function __createResponseObject(res, lang='en') {
-    return {
-        session: spPath,
-        queryInput: {
-            text: res,
-            languageCode: lang || 'en'
-        }
-    };
-}

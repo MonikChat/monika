@@ -30,6 +30,9 @@ exports.poem = {
 
         let res = await handler.generatePoem(ctx.cleanSuffix.split(' ').slice(1).join(' '), character);
 
-        await ctx.createMessage(`Here's your poem! \n ${res.url}`);
+        await ctx.createMessage({embed: {
+            title: "Here's your poem~!",
+            image: {url: res.url},
+        }});
     }
 };

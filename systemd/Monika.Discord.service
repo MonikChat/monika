@@ -20,6 +20,11 @@ WorkingDirectory=/home/user/monika
 
 ExecStop= /bin/sleep 3000
 
+# Whether to Restart
+# default true
+
+Restart = true
+
 [Install]
 
 WantedBy=multi-user.target

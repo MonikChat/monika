@@ -25,8 +25,7 @@ try {
         gameURL: process.env.GAME_URL,
         ownerID: process.env.BOT_OWNER_ID,
         maxShards: process.env.INSTANCES,
-        sayoriHost: process.env.POEM_HOST,
-        redisURL: process.env.REDIS_URL || 'redis://127.0.0.1/0'
+        sayoriHost: process.env.POEM_HOST
     };
 }
 

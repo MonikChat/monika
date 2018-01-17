@@ -13,7 +13,6 @@ module.exports = bot => {
             try {
                 bot.prefixes = bot.prefixes.concat([`<@${bot.user.id}> `, `<@!${bot.user.id}> `]);
 
-                await bot.localeManager.loadLocales(bot);
                 logger.info(`Loaded ${Object.keys(bot.localeManager.locales).length} locales.`);
 
                 require(path.resolve(__dirname, '../modules', 'loader'))(bot);

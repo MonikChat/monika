@@ -12,9 +12,6 @@ module.exports = bot => {
         if (bot.loadCommands) {
             try {
                 bot.prefixes = bot.prefixes.concat([`<@${bot.user.id}> `, `<@!${bot.user.id}> `]);
-
-                logger.info(`Loaded ${Object.keys(bot.localeManager.locales).length} locales.`);
-
                 require(path.resolve(__dirname, '../modules', 'loader'))(bot);
                 logger.info(`Loaded ${bot.commands.length} ${bot.commands.length === 1 ? 'command' : 'commands'}.`);
 

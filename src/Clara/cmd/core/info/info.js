@@ -8,7 +8,7 @@ const path = require('path');
 var version;
 
 try {
-    version = JSON.parse(fs.readFileSync(path.resolve(`${mainDir}`, '../', '../', '../', '../', './package.json'))).version;
+    version = JSON.parse(fs.readFileSync(path.resolve(`${mainDir}`, '../../../../../', './package.json'))).version;
 } catch(_) {
     version = JSON.parse(fs.readFileSync(path.resolve(`${mainDir}`, './package.json'))).version;
 }

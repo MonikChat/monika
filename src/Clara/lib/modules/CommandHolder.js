@@ -234,7 +234,8 @@ class CommandHolder {
 
         let cmd = this.getCommand(ctx.cmd);
 
-        if (!cmd) return;
+        if (!cmd && this.getCommand('chat')) cmd = this.getCommand('chat');
+        else if (!cmd) return;
 
         if (cmd.subcommands && cmd.subcommands[ctx.args[0]]) {
             let subcommand = ctx.args[0];
@@ -248,7 +249,7 @@ class CommandHolder {
             await cmd.main(this[_bot], ctx);
             logger.cmd(`${loggerPrefix(this[_bot], ctx)}Ran owner command '${ctx.cmd}'`);
         } else if (cmd.owner && !this[_bot].checkBotPerms(ctx.author.id)) {
-            logger.cmd(`${loggerPrefix(this[_bot], ctx)}Tried to run owner command '${ctx.cmd}'`);
+            logger.warn(`${loggerPrefix(this[_bot], ctx)}Tried to run owner command '${ctx.cmd}'`);
             return; // eslint-disable-line
         } else {
             if (!cmd.permissions || typeof cmd.permissions !== 'object') {

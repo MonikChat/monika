@@ -73,7 +73,7 @@ module.exports = bot => {
                 logger.warn(`${loggerPrefix(msg)}Discord error while running command "${cmd}":\n${err.stack}`);
                     
                 let embed = {
-                    title: 'Error',
+                    title: 'Internal Error',
                     description: `An error occurred while trying to execute \`${cmd}\``,
                     color: 0xF44336,
                     timestamp: new Date(),
@@ -101,7 +101,7 @@ module.exports = bot => {
 
                 let embed = {
                     title: 'Whoops!',
-                    description: `An error occurred while trying to execute command \`${cmd}\``,
+                    description: `An error occurred while trying to execute \`${cmd}\``,
                     color: 0xF44336,
                     timestamp: new Date(),
                     footer: {text: `Clara Version ${version}`},
@@ -112,7 +112,7 @@ module.exports = bot => {
                             + `${err}\n`
                             +  `\n${err.stack.split('\n')[1].trim()}`
                             + '```\n'
-                            + 'This has been logged, but if you wish to report this now so it can get fixed faster, you can join my [**support server**](https://discord.gg/rmMTZue).'
+                            + "I'm sorry if this caused a nuisance, but you can contact us at monika@headbow.strean to get this fixed or open an issue at [GitHub](https://github.com/MonikaDesu/monika)."
                         }
                     ]
                 };

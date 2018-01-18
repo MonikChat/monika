@@ -29,12 +29,8 @@ module.exports = bot => {
          
         if (!bot.commands.getCommand(cmd) && !(RegExp(`^<@!?${bot.user.id}>\s?.+$`) && bot.commands.getCommand('chat'))) return; // eslint-disable-line
 
-        let settings = {};
-        settings.guild = await bot.getGuildSettings(msg.channel.guild.id);
-        settings.user = await bot.getUserSettings(msg.author.id);
-        settings.locale = settings.user.locale !== bot.localeManager.defaultLocale ? settings.user.locale : settings.guild.locale;
 
-        let ctx = new Context(msg, bot, settings);
+        let ctx = new Context(msg, bot);
         ctx.cmd = cmd;
 
         try {
@@ -78,10 +74,10 @@ module.exports = bot => {
                     
                 let embed = {
                     title: 'Error',
-                    description: `An error occurred while trying to execute command \`${cmd}\``,
+                    description: `An error occurred while trying to execute \`${cmd}\``,
                     color: 0xF44336,
                     timestamp: new Date(),
-                    footer: {text: `Clara Version ${version}`},
+                    footer: {text: `Monika ${version}`},
                     fields: [
                         {
                             name: '\u200b',
@@ -89,7 +85,7 @@ module.exports = bot => {
                             + `Code: ${resp.code}\n`
                             + `Message: ${resp.message}\n`
                             + '```\n'
-                            + 'This has been logged, but if you wish to report this now so it can get fixed faster, you can join my [**support server**](https://discord.gg/rmMTZue).'
+                            + "I'm sorry if this caused a nuisance, but you can contact us at monika@headbow.strean to get this fixed or open an issue at [GitHub](https://github.com/MonikaDesu/monika)."
                         }
                     ]
                 };

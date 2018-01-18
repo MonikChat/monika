@@ -13,7 +13,7 @@ var version;
 try {
     version = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../', '../', './package.json'))).version;
 } catch(_) {
-    version = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../', '../', '../', './package.json'))).version;
+    version = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../', '../', '../', '../', './package.json'))).version;
 }
 
 module.exports = bot => {

@@ -376,14 +376,14 @@ class CommandHolder {
                 if (foundPerm) {
                     let {perm, who} = foundPerm;
                     if (who === 'author') {
-                        ctx.createMessage(this[_bot].localeManager.t('user-noPerm', ctx.locale, {perm: PermissionsPrettyPrinted[perm]})).then(resolve).catch(reject);
+                        ctx.createMessage(`You require the **${PermissionsPrettyPrinted[perm]}** permission to use this command.`).then(resolve).catch(reject);
                     } else if (who === 'self') {
-                        ctx.createMessage(this[_bot].localeManager.t('bot-noPerm', ctx.locale, {perm: PermissionsPrettyPrinted[perm]})).then(resolve).catch(reject);
+                        ctx.createMessage(`I do not have the **${PermissionsPrettyPrinted[perm]}** permission.`).then(resolve).catch(reject);
                     } else if (who === 'both') {
                         if (!ctx.hasPermission(perm, 'author')) {
-                            ctx.createMessage(this[_bot].localeManager.t('user-noPerm', ctx.locale, {perm: PermissionsPrettyPrinted[perm]})).then(resolve).catch(reject);
+                            ctx.createMessage(`You require the **${PermissionsPrettyPrinted[perm]}** permission to use this command.`).then(resolve).catch(reject);
                         } else if (!ctx.hasPermission(perm)) {
-                            ctx.createMessage(this[_bot].localeManager.t('bot-noPerm', ctx.locale, {perm: PermissionsPrettyPrinted[perm]})).then(resolve).catch(reject);
+                            ctx.createMessage(`I do not have the **${PermissionsPrettyPrinted[perm]}** permission.`).then(resolve).catch(reject);
                         }
                     }
                 }
@@ -455,7 +455,6 @@ let _msg = Symbol();
  * @prop {Eris.Member} guildBot The member object of the bot.
  * @prop {String[]} mentionStrings Raw IDs of all users mentioned. May contain non-existant users.
  * @prop {String} suffix Arguments joined with spaces.
- * @prop {Object} settings Settings for the guild.
  * @see http://eris.tachibana.erendale.abal.moe/Eris/docs/Message
  */
 class Context {
@@ -464,7 +463,6 @@ class Context {
      * 
      * @param {Eris.Message} msg Message to inherit from.
      * @param {Eris.Client} bot Bot instance to help with some parsing.
-     * @param {Object} settings Settings to assign to context.
     */
     constructor(msg, bot) {
         // Validate all objects are the types we want.

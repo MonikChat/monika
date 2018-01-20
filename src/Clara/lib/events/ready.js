@@ -1,5 +1,5 @@
 /**
- * @file Ready event that handles loading commands, locales, and the database tables if need be.
+ * @file Ready event that handles loading commands and the database tables if need be.
  * @author Capuccino
  * @author Ovyerus
  */

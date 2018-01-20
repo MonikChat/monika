@@ -43,24 +43,4 @@ module.exports = bot => {
 
         await bot.postGuildCount(); 
     });
-
-    bot.on('guildMemberAdd', async (guild, member) => {
-        let res = await bot.getGuildSettings(guild.id);
-
-        if (!res || !res.greeting || !res.greeting.enabled || !res.greeting.channelID || !res.greeting.message) return;
-
-        let msg = res.greeting.message.replace(/{{user}}/g, member.mention).replace(/{{name}}/g, utils.formatUsername(member));
-
-        return guild.channels.get(res.greeting.channelID).createMessage(msg);
-    });
-
-    bot.on('guildMemberRemove', async (guild, member) => {
-        let res = await bot.getGuildSettings(guild.id);
-
-        if (!res || !res.goodbye || !res.goodbye.enabled || !res.goodbye.channelID || !res.goodbye.message) return;
-
-        let msg = res.goodbye.message.replace(/{{user}}/g, utils.formatUsername(member)).replace(/{{name}}/gi, member.username);
-
-        await guild.channels.get(res.goodbye.channelID).createMessage(msg);
-    });
 };

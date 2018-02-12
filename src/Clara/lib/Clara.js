@@ -21,7 +21,6 @@ const path = require('path');
  * @prop {ClaraConfig} config Configuration passed during construction.
  * @prop {Boolean} loadCommands If the bot should load commands or not.
  * @prop {String[]} prefixes Array of all the prefixes that are able to be used by the bot.
- * @prop {Object} settings Settings cache for users and guilds.
  */
 class Clara extends Eris.Client {
     /**

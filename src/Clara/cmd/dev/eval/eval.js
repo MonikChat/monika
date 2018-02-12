@@ -39,7 +39,7 @@ exports.eval = {
     async main(bot, ctx) {
         if (ctx.suffix.length === 0) return await ctx.createMessage('Please give arguments to evaluate.');
 
-        let {args, cmd, suffix, cleanSuffix, settings, guildBot, channel, guild, author} = ctx; // eslint-disable-line
+        let {args, cmd, suffix, cleanSuffix, guildBot, channel, guild, author} = ctx; // eslint-disable-line
 
         try {
             let returned = eval(ctx.suffix);

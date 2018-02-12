@@ -13,7 +13,7 @@ var version;
 try {
     version = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../', '../', './package.json'))).version;
 } catch(_) {
-    version = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../', '../', '../', './package.json'))).version;
+    version = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../', '../', '../', '../', './package.json'))).version;
 }
 
 module.exports = bot => {
@@ -29,12 +29,7 @@ module.exports = bot => {
          
         if (!bot.commands.getCommand(cmd) && !(RegExp(`^<@!?${bot.user.id}>\s?.+$`) && bot.commands.getCommand('chat'))) return; // eslint-disable-line
 
-        let settings = {};
-        settings.guild = await bot.getGuildSettings(msg.channel.guild.id);
-        settings.user = await bot.getUserSettings(msg.author.id);
-        settings.locale = settings.user.locale !== bot.localeManager.defaultLocale ? settings.user.locale : settings.guild.locale;
-
-        let ctx = new Context(msg, bot, settings);
+        let ctx = new Context(msg, bot);
         ctx.cmd = cmd;
 
         try {

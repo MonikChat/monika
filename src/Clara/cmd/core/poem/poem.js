@@ -13,7 +13,8 @@ exports.commands = [
 
 exports.init = bot => {
     handler = new PoemHandler(bot.config.sayoriHost);
-}
+};
+
 exports.poem = {
     desc: 'Make a poem!',
     usage: '<yuri | yuri2 | yuri3 | natsuki | monika | sayori> <poem>',

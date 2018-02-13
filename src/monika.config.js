@@ -37,7 +37,7 @@ module.exports = {
             watch: ['./Rebecca/src/chatbot.py'],
             ignore_watch: ['data', 'logs', 'cmd', 'cache', 'node_modules'],
             args: ['--color']
-        },
+        }
 
 
     ]

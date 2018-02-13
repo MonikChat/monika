@@ -66,7 +66,7 @@ exports.remove = {
 
         let id = /^<@!?\d+>$/.test(ctx.args[0]) ? ctx.args[0].replace(/^<@!?/, '').slice(0, -1) : ctx.args[0];
 
-        if (!bot.blacklist.includes(id)) return await ctx.createMessage(`Huh, you did not seem to ask me to ignore him, ${ctx.author.username}-kun..` );
+        if (!bot.blacklist.includes(id)) return await ctx.createMessage(`Huh, you did not seem to ask me to ignore him, ${ctx.author.username}-kun..`);
 
         let newBlacklist = bot.blacklist.filter(b => b !== id);
         let data = {admins: bot.admins, blacklist: newBlacklist};

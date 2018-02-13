@@ -32,7 +32,7 @@ exports.poem = {
 
         await ctx.createMessage({embed: {
             title: "Here's your poem~!",
-            image: {url: res.url},
+            image: {url: res.url}
         }});
     }
 };

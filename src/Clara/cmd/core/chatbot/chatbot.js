@@ -12,7 +12,7 @@ exports.chat = {
     desc: 'Chat to Monika',
     usage: '<message>',
     async main(bot, ctx) {
-        if(!ctx.suffix) {
+        if (!ctx.suffix) {
             let dialogue = responses[Math.floor(Math.random() * responses.length)];
             await ctx.createMessage(dialogue);
         } else {

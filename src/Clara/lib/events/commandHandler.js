@@ -76,7 +76,7 @@ module.exports = bot => {
                     description: `An error occurred while trying to execute command \`${cmd}\``,
                     color: 0xF44336,
                     timestamp: new Date(),
-                    footer: {text: `Clara Version ${version}`},
+                    footer: {text: `Monika Version ${version}`},
                     fields: [
                         {
                             name: '\u200b',
@@ -84,7 +84,7 @@ module.exports = bot => {
                             + `Code: ${resp.code}\n`
                             + `Message: ${resp.message}\n`
                             + '```\n'
-                            + 'This has been logged, but if you wish to report this now so it can get fixed faster, you can join my [**support server**](https://discord.gg/rmMTZue).'
+                            + 'This has been logged, but if you wish to report this now so it can get fixed faster, you can join my [**support server**](https://discord.gg/bXyaehg).'
                         }
                     ]
                 };
@@ -103,7 +103,7 @@ module.exports = bot => {
                     description: `An error occurred while trying to execute command \`${cmd}\``,
                     color: 0xF44336,
                     timestamp: new Date(),
-                    footer: {text: `Clara Version ${version}`},
+                    footer: {text: `Monika Version ${version}`},
                     fields: [
                         {
                             name: '\u200b',
@@ -111,7 +111,7 @@ module.exports = bot => {
                             + `${err}\n`
                             +  `\n${err.stack.split('\n')[1].trim()}`
                             + '```\n'
-                            + 'This has been logged, but if you wish to report this now so it can get fixed faster, you can join my [**support server**](https://discord.gg/rmMTZue).'
+                            + 'This has been logged, but if you wish to report this now so it can get fixed faster, you can join my [**support server**](https://discord.gg/bXyaehg).'
                         }
                     ]
                 };

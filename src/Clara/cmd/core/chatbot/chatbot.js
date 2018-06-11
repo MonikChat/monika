@@ -12,6 +12,7 @@ let cb;
 exports.init = bot => {
     if(!bot.config.cakeChatInstanceURL) cb = new CakeChat(process.env.CAKECHAT_URL);
     else if (!process.env.CAKECHAT_URL) return new Error('CakeChat URL not found from config or env vars.');
+    else cb = new CakeChat(bot.config.cakeChatInstanceURL);
 };
 exports.commands = ['chat'];
 

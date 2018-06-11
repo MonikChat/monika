@@ -8,7 +8,7 @@
     "ownerID": "",
     "maxShards": 1,
     "sayoriHost": "",
-    "dialogFlowProjectID": "",
+    "cakeChatInstanceURL" : "",
     "discordBotsPWKey": "",
     "discordBotsOrgKey": ""
 }

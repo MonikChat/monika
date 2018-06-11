@@ -33,7 +33,7 @@ class CakeChatHandler {
     getResponse(context) {
         return new Promise((resolve, reject) => {
             if (!Array.isArray(context)) return reject('context is not an array.');
-            else resolve(request('POST', this.url, {
+            else resolve(request('POST', `${this.url}/cakechat_api/v1/actions/get_response`, {
                 headers: {
                     'Content-Type': 'application/json',
                     'User-Agent': 'Clara/0.3.0-Monika'

@@ -6,6 +6,13 @@
  */
 
 const responses = require('./emptyResponseDialogues.json');
+const CakeChat = require('./CakeChatHandler');
+let cb;
+
+exports.init = bot => {
+    if(!bot.config.cakeChatInstanceURL) cb = new CakeChat(process.env.CAKECHAT_URL);
+    else if (!process.env.CAKECHAT_URL) return new Error('CakeChat URL not found from config or env vars.');
+};
 exports.commands = ['chat'];
 
 exports.chat = {
@@ -16,8 +23,10 @@ exports.chat = {
             let dialogue = responses[Math.floor(Math.random() * responses.length)];
             await ctx.createMessage(dialogue);
         } else {
-            //TODO : Response Object Model for Rebecca
-            throw new Error('not implemented.');
+            cb.getResponse([ctx.suffix]).then(r => {
+                let resp = JSON.parse(r.body.response);
+                ctx.createMessage(resp);
+            });
         }
     }
 };

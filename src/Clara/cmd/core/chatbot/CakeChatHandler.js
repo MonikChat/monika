@@ -7,8 +7,7 @@
  
 const https = require('https');
 const URL = require('url');
-const HostRegex = str => /^([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]{0,61}[a-zA-Z0-9])\
-(\.([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]{0,61}[a-zA-Z0-9]))*$/gi.test(str);
+const URL_REGEX = /^(https?:\/\/)?(((www\.)?[a-zA-Z0-9\.\-\_]+(\.[a-zA-Z]{2,3})+)|(\b(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\b))(:[0-9]+)?(\/[a-zA-Z0-9\_\-\s\.\/\?\%\#\&\=]*)?$/i; // eslint-disable-line
 
 /**
   * Class that exposes all the methods to query to a cakechat instance
@@ -21,7 +20,7 @@ class CakeChatHandler {
      */
     constructor(url) {
         this.url = url;
-        if(!HostRegex(url)) return new TypeError('url is not a valid hostname/IP');
+        if(!URL_REGEX.test(url)) return new TypeError('url is not a valid hostname/IP');
         if(typeof url !== 'string') return new TypeError('url is not a string.');
     }
 

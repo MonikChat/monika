@@ -10,10 +10,11 @@ const CakeChat = require('./CakeChatHandler');
 let cb;
 
 exports.init = bot => {
-    if(!bot.config.cakeChatInstanceURL) cb = new CakeChat(process.env.CAKECHAT_URL);
-    else if (!process.env.CAKECHAT_URL) return new Error('CakeChat URL not found from config or env vars.');
-    else cb = new CakeChat(bot.config.cakeChatInstanceURL);
+    if (!bot.config.cakeChatInstanceURL && !process.env.CAKECHAT_URL) throw new Error('CakeChat URL not found from config or env vars.');
+
+    cb = new CakeChat(process.env.CAKECHAT_URL || bot.config.cakeChatInstanceURL);
 };
+
 exports.commands = ['chat'];
 
 exports.chat = {
@@ -22,13 +23,13 @@ exports.chat = {
     async main(bot, ctx) {
         if (!ctx.suffix) {
             let dialogue = responses[Math.floor(Math.random() * responses.length)];
-            await ctx.createMessage(dialogue);
-        } else {
-            cb.getResponse([ctx.suffix]).then(r => {
-                let resp = JSON.parse(r.body.response);
-                ctx.createMessage(resp);
-            });
+            return await ctx.createMessage(dialogue);
         }
+
+        await ctx.channel.sendTyping();
+
+        let response = await cb.getResponse([ctx.suffix]);
+        await ctx.createMessage(response);
     }
 };
 

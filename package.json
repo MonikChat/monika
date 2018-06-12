@@ -4,7 +4,7 @@
     "description": "The only discord bot you need",
     "main": "./src/bot.js",
     "scripts": {
-        "start": "node ./src/bot.js"
+        "start": "node src/Clara/bot.js"
     },
     "repository": {
         "type": "git",
@@ -14,9 +14,10 @@
         "discord",
         "bot"
     ],
-    "author": [
+    "contributors": [
         "sr229",
-        "FiniteReality"
+        "FiniteReality",
+        "Ovyerus"
     ],
     "license": "MIT",
     "bugs": {

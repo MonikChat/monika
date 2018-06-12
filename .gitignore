@@ -27,4 +27,7 @@ config.json
 data
 logs
 
+# NPM/Yarn data
 package-lock.json
+yarn.lock
+yarn-error.log

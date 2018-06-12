@@ -27,7 +27,13 @@ module.exports = bot => {
 
         let cmd = cleaned.split(' ')[0];
          
-        if (!bot.commands.getCommand(cmd) && !(RegExp(`^<@!?${bot.user.id}>\s?.+$`) && bot.commands.getCommand('chat'))) return; // eslint-disable-line
+        if (!bot.commands.getCommand(cmd)) {
+            if (!RegExp(`^<@!?${bot.user.id}>\s?.+$`) && !bot.commands.getCommand('chat')) return; // eslint-disable-line
+            else {
+                cmd = 'chat';
+                msg.content = `<@${bot.user.id}> chat ${cleaned}`;
+            }
+        }
 
         let ctx = new Context(msg, bot);
         ctx.cmd = cmd;

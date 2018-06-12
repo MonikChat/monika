@@ -19,14 +19,15 @@ class CakeChatHandler {
      * @param {String} url the URL for your instance. Must be a valid IP or hostname. 
      */
     constructor(url) {
+        if (!URL_REGEX.test(url)) return new TypeError('url is not a valid hostname/IP');
+        if (typeof url !== 'string') return new TypeError('url is not a string.');
+
         this.url = url;
-        if(!URL_REGEX.test(url)) return new TypeError('url is not a valid hostname/IP');
-        if(typeof url !== 'string') return new TypeError('url is not a string.');
     }
 
     /**
      * Gets Response from CakeChat Server
-     * @param {Array} context the context to pass where the second index in the array is the current input
+     * @param {Array} context The context to pass where the second index in the array is the current input
      * @returns {Promise<Object>} the response text.
      */
     getResponse(context) {
@@ -39,10 +40,10 @@ class CakeChatHandler {
                 }
 
             }, JSON.stringify({
-                context: context,
-                from_cakechat: Boolean(true),
+                context,
+                from_cakechat: true
             })));
-        });
+        }).then(body => body.response);
     }
 }
 

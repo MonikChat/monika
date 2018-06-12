@@ -1,6 +1,6 @@
 [submodule "src/Sayori"]
 	path = src/Sayori
-	url = https://github.com/MonikaDesu/Sayori
-[submodule "src/Rebecca"]
-	path = src/Rebecca
-	url = https://github.com/MonikaDesu/Rebecca
+	url = https://github.com/ProjectMonika/Sayori
+[submodule "src/Ivy"]
+	path = src/Ivy
+	url = https://github.com/ProjectMonika/Ivy

@@ -8,7 +8,7 @@ const {Context} = require(path.resolve(__dirname, '../modules', 'CommandHolder')
 
 module.exports = bot => {
     bot.on('messageCreate', async m => {
-        if (!m.channel.guild || m.author.id !== bot.user.id || bot.isBlacklisted(m.author.id)) {
+        if (!m.channel.guild || m.author.id !== bot.user.id || !bot.isBlacklisted(m.author.id)) {
             try {
                 let ctx = new Context(m, bot);
                 ctx.cmd = 'chat';

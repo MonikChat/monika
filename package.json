@@ -1,6 +1,6 @@
 {
     "name": "monika",
-    "version": "2.0.0-SNAPSHOT",
+    "version": "2.0.0",
     "description": "The only discord bot you need",
     "main": "./src/bot.js",
     "scripts": {

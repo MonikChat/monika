@@ -28,12 +28,13 @@ exports.poem = {
 
         if (character === 'y' && /[1-3]$/.test(ctx.args[0])) character += ctx.args[0].slice(-1);
         else character += '1';
-
-        let res = await handler.generatePoem(ctx.cleanSuffix.split(' ').slice(1).join(' '), character);
-
-        await ctx.createMessage({embed: {
-            title: "Here's your poem~!",
-            image: {url: res.url}
-        }});
+        
+        handler.generatePoemJson(ctx.cleanSuffix.split(' ').slice(1).join(' '), character).then(res => {
+            console.log(res);
+            ctx.createMessage({embed: {
+                title: "Here's your poem!",
+                image: {url: JSON.parse(res).url}
+            }});
+        });
     }
 };

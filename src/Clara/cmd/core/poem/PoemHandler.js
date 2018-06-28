@@ -28,7 +28,7 @@ class PoemHandler {
      * Generates a poem based from a input
      * @param {String} content Text content of the poem.
      * @param {String} [font='m1'] Font to generate the poem with. Supported fonts can be found [here]{@link https://github.com/MonikaDesu/Sayori/blob/master/API.md#supported-fonts}
-     * @returns {Promise<String>} Generated poem image.
+     * @returns {Promise<Buffer>} Generated poem image.
      */
     generatePoem(content, font='m1') {
         return new Promise((resolve, reject) => {
@@ -39,6 +39,19 @@ class PoemHandler {
                     font
                 })
             }).then(res => resolve(res.body)).catch(reject);
+        });
+    }
+
+    /**
+     * Generates a poem based from a input (JSON)
+     * @param {String} content Text content of the poem.
+     * @param {String} [font='m1'] Font to generate the poem with. Supported fonts can be found [here]{@link https://github.com/MonikaDesu/Sayori/blob/master/API.md#supported-fonts}
+     * @returns {Promise<String>} Generated poem image.
+     */    
+    generatePoemJson(content, font='m1') {
+        return new Promise((resolve, reject) => {
+           got.post(`${this.host}/generate?poem=${encodeURI(content)}&font=${font}`)
+              .then(res => resolve(res.body)).catch(reject);
         });
     }
 }

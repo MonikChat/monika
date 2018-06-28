@@ -1,7 +1,5 @@
 {
   "main": "chatbot.js",
-  "dependencies": {
-    "dialogflow": "0.1.0",
-    "uuid": "^3.1.0"
+  "dependencies" : {
   }
 }
